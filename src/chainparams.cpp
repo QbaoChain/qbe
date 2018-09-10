@@ -387,12 +387,9 @@ public:
     {
         strNetworkID = gArgs.GetArg("-chain", "");
         assert(strNetworkID.size() != 0);
-//        consensus.nSubsidyInit = atoi(gArgs.GetArg("-subsidy-init", "0"));
-        consensus.nSubsidyHalvingInterval = atoi(gArgs.GetArg("-subsidy-halving-interval", "0"));
+        consensus.nSubsidyInit = atoi(gArgs.GetArg("-subsidy-init", "0"));
+        consensus.nSubsidyHingInterval = atoi(gArgs.GetArg("-subsidy-halving-interval", "0"));
         consensus.nSubsidyHalvingTime = atoi(gArgs.GetArg("-subsidy-halving-time", "7"));
-        consensus.nSubsidyInit = atoi("50");
-//        consensus.nSubsidyHalvingInterval = 100;
-//        consensus.nSubsidyHalvingTime = 7;
         consensus.BIP34Height = 0;
         consensus.BIP65Height = 0;
         consensus.BIP66Height = 0;
