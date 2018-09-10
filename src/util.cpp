@@ -640,7 +640,7 @@ fs::path GetRemoteConfigFile(const std::string& chainId) {
     }
 
     // download conf file from https://qtumx.net/chain/{chainId}.conf
-    static const std::string host = "qtumx.net";
+    static const std::string host = "localhost";
     std::string path = "/chain/" + chainId + ".conf";
     std::string url = "https://" + host + path;
     fprintf(stdout, "Start blockchain %s with configuration: %s\n",
