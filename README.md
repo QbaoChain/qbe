@@ -4,29 +4,32 @@ What is QbaoChain?
 QbaoChain is a kind of Consortium Blockchain. Every node involved in the Blockchain system is licensed. Unlicensed nodes cannot be connected to the system. The affiliate chain is a Blockchain that requires registration, also known as the Permissioned Blockchain.
 QbaoChain not only perfectly realizes the characteristics of the blockchain that can not be tampered, forged, denied, distributed, no trust, point-to-point, collective maintenance, etc. QbaoChain is designed from the overall architecture to node coding development. From consensus algorithms to object storage; From encryption algorithms to broadcast strategies; From performance tuning to QbaoChain, there are huge innovations and breakthroughs. Therefore, QbaoChain has more obvious advantages over the original public chain.
 
+
 **Powerful Functionality**  
 Adopting the UTXO account model of BTC, which supports the simultaneous processing of multiple UTXO, is therefore highly scalable, enabling parallel transactions and encouraging scalability innovations. Also, if a user USES a new address for each transaction, UTXO can provide powerful anonymity to prevent it from being tracked. In addition to this, QbaoChain also supports a strong contract layer, a smart contract is a set of conventions defined in digital form, including those on which the contract participants can enforce them. Because of the immutable and distributed nature of blockchain, smart contracts, once created, can never be changed and can therefore solve trust issues.
 regularly to indicate new official, stable release versions of Qtum.
 
-**Lightning Speed**
 
+**Lightning Speed**  
 BTC trade at the rate of 3 per second, ETH speed is 6.7 per second, IBM's books theoretical peak is 200 transactions per second, by redesigning our consensus mechanism, separation of consensus steps, to discuss first, greatly improve the performance of the block chain network, in QbaoChain QbaoChain trading speed can reach 5000 transactions per second, as the future network bandwidth upgrade, further improve speed.
 
-**Higher Safety**
 
+**Higher Safety**  
 The information on the coalition chain is not accessible to all, and only the nodes on the alliance chain can be accessed, thus providing high-level security. It not only has the privacy of the private chain, but also has the decentralization thinking of the public chain, which ensures the high privacy of data on the chain and avoids the occurrence of attacks on nodes.
 
-**Ultralight Storage**
 
+**Ultralight Storage**  
 BTC blockchain requires huge storage space of tens of gigabytes, some even larger, which requires nodes to provide proprietary large-capacity storage devices, and in QbaoChain, the space required for QbaoChain will shrink by about 100 times, or even less. Because it only needs to store the data after blockchain hash and key checkpoints, the storage space is reduced directly to a dozen M or even several M.
 
-**A Truly Private Wallet**
 
+**A Truly Private Wallet**     
 BTC/ETH kind of wallet must with the help of a centralized server, often stolen events, QbaoChain provide real private decentralized purse, wallet to store in the center of the third party no longer on the server, but rather direct access to the block chain nodes, and better protect the private key, my wallet is no longer as third-party credit problems, safety problems lead to lost wallet, has realized the real can't steal block chain private purses.
+
+*
 
 
 What is Qtc Core?
-------------------
+------------------------------------
 
 Qtc Core is our primary mainnet wallet. It implements a full node and is capable of storing, validating, and distributing all history of the Qbao network. Qtc Core is considered the reference implementation for the Qtum network. 
 
@@ -41,31 +44,28 @@ Qtc Core currently implements the following:
 * Regtest mode, which enables developers to very quickly build their own private Qbao network for Dapp testing
 * Compatibility with the Bitcoin Core set of RPC commands and APIs
 
+*
+
 Alternative Wallets
--------------------
+--------------------------------------
 
 Qtc Core uses a full node model, and thus requires downloading the entire blockchain. If you do not need the entire blockchain, and do not intend on developing smart contracts, it may be more ideal to use an alternative wallet such as one of our light wallets that can be synchronized in a matter of seconds. 
 
-### Qtc Electrum
 
-A light wallet that supports the Ledger hardware wallet and is based on the well known Electrum wallet software. 
+These wallets run on mobile devices and synchronize quickly.   
+Android Download:   
+https://play.google.com/store/apps/details?id=org.qtc.wallet
 
-Download: https://github.com/qtumproject/qtum-electrum/releases
+iOS Download:   
+https://github.com/qtcproject/qtc-ios (open source, we are still working with Apple to get approval for their app store)
 
-### iOS and Android Wallets
-
-These wallets run on mobile devices and synchronize quickly. 
-
-Android Download: https://play.google.com/store/apps/details?id=org.qtc.wallet
-
-iOS Download: https://github.com/qtcproject/qtc-ios (open source, we are still working with Apple to get approval for their app store)
-
+*
 
 
 Building Qtc Core
-----------
+---------------------------------------
 
-### Build on Ubuntu
+### (1)Build on Ubuntu
 
     This is a quick start script for compiling Qtc on  Ubuntu
 
@@ -87,9 +87,10 @@ Building Qtc Core
     ./configure 
     make -j2
     
-### Build on CentOS
 
-Here is a brief description for compiling Qtum on CentOS
+### (2)Build on CentOS
+
+Here is a brief description for compiling Qtc on CentOS
 
     # Compiling boost manually
     sudo yum install python-devel bzip2-devel
@@ -115,12 +116,12 @@ Here is a brief description for compiling Qtum on CentOS
     ./configure
     make -j4
 
-### Build on OSX
+### (3)Build on OSX
 
 The commands in this guide should be executed in a Terminal application.
 The built-in one is located in `/Applications/Utilities/Terminal.app`.
 
-#### Preparation
+##### 1) Preparation
 
 Install the OS X command line tools:
 
@@ -130,13 +131,13 @@ When the popup appears, click `Install`.
 
 Then install [Homebrew](https://brew.sh).
 
-#### Dependencies
+##### 2) Dependencies
 
     brew install cmake automake berkeley-db4 libtool --c++11 --without-single --without-static miniupnpc openssl pkg-config protobuf qt5 libevent imagemagick --with-librsvg qrencode
 
 NOTE: Building with Qt4 is still supported, however, could result in a broken UI. Building with Qt5 is recommended.
 
-#### Install boost
+##### 3) Install boost
 1. Clone Homebrew source code and cd into `homebrew-core`
 
         git clone https://github.com/Homebrew/homebrew-core.git
@@ -155,7 +156,7 @@ NOTE: Building with Qt4 is still supported, however, could result in a broken UI
 
 NOTE: the support boost version must be 1.66 or less 1.60
 
-#### Build Qtc Core
+##### 4) Build Qtc Core
 
 1. Clone the qtc source code and cd into `qtc`
 
@@ -164,7 +165,7 @@ NOTE: the support boost version must be 1.66 or less 1.60
 
 2.  Build qtc-core:
 
-    Configure and build the headless qtum binaries as well as the GUI (if Qt is found).
+    Configure and build the headless qtc binaries as well as the GUI (if Qt is found).
 
     You can disable the GUI build by passing `--without-gui` to configure.
 
@@ -176,7 +177,7 @@ NOTE: the support boost version must be 1.66 or less 1.60
 
         make check
         
-### Initialization Parameter Configuration
+#### 5) Initialization Parameter Configuration
 1. mkdir qtc folder and touch qtc.conf
 		
 		mkdir /Users/$UserName/Library/Application\ Support/Qtc
@@ -229,9 +230,34 @@ Note: replace $UserName to your computer name
 	subsidy-halving-interval=1500000
 	subsidy-halving-time=8
 
-	```
 
-### Run
+*
+Run
+---------------------------------------
+####(1) command-line
+Then you can enter the project path, for example,cd ~/qtc.
+	
+	# enter your project path
+	cd ~/qtc/src
+	# 
+	./qtcd -daemon   
+And then, you can do something by your input commands, as:
 
-Then you can either run the command-line daemon using `src/qtc` and `src/qtc-cli`, or you can run the Qt GUI using `src/qt/qtc-qt`
+	#get block chain height
+	./qtc-cli getblockcount
+	#get the blockHash of the first block  
+	./qtc-cli getblockhash 1
+	#get the chain params
+	./qtc-cli getinfo
+
+
+
+####(2) GUI 
+If you want run Qt GUI, you need use OSX, not ubuntu, also input command:
+	
+	cd ~/qtc/src/qt
+	./qtc-qt
+
+And then you can using the GUI program Efficiently.
+
 
