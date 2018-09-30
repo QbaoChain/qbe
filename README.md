@@ -66,33 +66,41 @@ Building Qtc Core
 ---------------------------------------
 
 ### (1)Build on Ubuntu
+This is a quick start script for compiling Qtc on  Ubuntu.
+  
+####1.Install protobuf(The version of apt-get is too low)
 
-    This is a quick start script for compiling Qtc on  Ubuntu
+	wget https://github.com/google/protobuf/archive/v3.5.1.tar.gz
+	tar -xzvf v3.5.1.tar.gz
+	cd protobuf-3.5.1/ 
+	./autogen.sh 
+	./configure --prefix=/usr/local/protobuf 
+	make -j8 && make install 
+	ldconfig
 
+#####2.Installing Dependencies for Qtc
 
-    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils git cmake libboost-all-dev
-    sudo apt-get install software-properties-common
-    sudo add-apt-repository ppa:bitcoin/bitcoin
-    sudo apt-get update
-    sudo apt-get install libdb4.8-dev libdb4.8++-dev
+    apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils git cmake libboost-all-dev
+    apt-get install software-properties-common
+    add-apt-repository ppa:bitcoin/bitcoin
+    apt-get update
+    apt-get install libdb4.8-dev libdb4.8++-dev
 
-    # If you want to build the Qt GUI:
-    sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qrencode
+###### If you want to build the Qt GUI:
+	apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qrencode
 
-    git clone http://43.254.148.146:83/QbaoChain/perfect.git --recursive
-    cd qtc
-
-    # Note autogen will prompt to install some more dependencies if needed
-    ./autogen.sh
-    ./configure 
-    make -j2
+###### Compile Qtc
+	git clone --recursive http://43.254.148.146:83/QbaoChain/perfect.git
+	cd qtc
+	./autogen.sh
+	./configure 
     
 
 ### (2)Build on CentOS
 
 Here is a brief description for compiling Qtc on CentOS
 
-    # Compiling boost manually
+##### Compiling boost manually
     sudo yum install python-devel bzip2-devel
     git clone https://github.com/boostorg/boost.git
     cd boost
@@ -102,7 +110,7 @@ Here is a brief description for compiling Qtc on CentOS
     ./b2 headers
     sudo ./b2 -j4 install
     
-    # Installing Dependencies for Qtc
+##### Installing Dependencies for Qtc
     sudo yum install epel-release
     sudo yum install libtool libdb4-cxx-devel openssl-devel libevent-devel
     
@@ -138,19 +146,19 @@ Then install [Homebrew](https://brew.sh).
 NOTE: Building with Qt4 is still supported, however, could result in a broken UI. Building with Qt5 is recommended.
 
 ##### 3) Install boost
-1. Clone Homebrew source code and cd into `homebrew-core`
+######1. Clone Homebrew source code and cd into `homebrew-core`
 
         git clone https://github.com/Homebrew/homebrew-core.git
 	
-2. check boost commit log
+######2. check boost commit log
 		
 		 git log ./Formula/boost.rb | less
 		 
-3. checkout git HEAD to commitId: 6308e2c01c0821f899acd75e47321cd3aa882680 ( boost --version 1.66.0)
+######3. checkout git HEAD to commitId: 6308e2c01c0821f899acd75e47321cd3aa882680 ( boost --version 1.66.0)
 		
 		git checkout 6308e2c01c0821f899acd75e47321cd3aa882680
 	
-4. brew install boost
+######4. brew install boost
 		
 		brew install ./Formula/boost.rb
 
@@ -158,12 +166,12 @@ NOTE: the support boost version must be 1.66 or less 1.60
 
 ##### 4) Build Qtc Core
 
-1. Clone the qtc source code and cd into `qtc`
+######1. Clone the qtc source code and cd into `qtc`
 
         git clone --recursive http://43.254.148.146:83/QbaoChain/perfect.git
         cd qtc
 
-2.  Build qtc-core:
+######2.  Build qtc-core:
 
     Configure and build the headless qtc binaries as well as the GUI (if Qt is found).
 
@@ -173,12 +181,12 @@ NOTE: the support boost version must be 1.66 or less 1.60
         ./configure
         make
 
-3.  It is recommended to build and run the unit tests:
+######3.  It is recommended to build and run the unit tests:
 
         make check
         
 #### 5) Initialization Parameter Configuration
-1. mkdir qtc folder and touch qtc.conf
+######1. mkdir qtc folder and touch qtc.conf
 		
 		mkdir /Users/$UserName/Library/Application\ Support/Qtc
 		cd /Users/$UseName/Library/Application\ Support/Qtc
@@ -186,9 +194,8 @@ NOTE: the support boost version must be 1.66 or less 1.60
 	
 Note: replace $UserName to your computer name
 
-2. echo cofiguration parmeter to qtc.conf, The list of configuration parameters is as follows:
+######2. echo cofiguration parmeter to qtc.conf, The list of configuration parameters is as follows:
 	
-	```
 	addressindex=1
 	timestampindex=1
 	spentindex=1
@@ -208,16 +215,15 @@ Note: replace $UserName to your computer name
 	#debug=zmq
 	maxmempool=100000
 
-	```	
-3. mkdir chain_cup and add configuration file
+
+######3. mkdir chain_cup and add configuration file
 		
 		mkdir chain_cup
 		cd chain_cup
 		touch qtc.conf
 		
-4. echo cofiguration parmeter to qtc.conf, The list of configuration parameters is as follows:
+######4. echo cofiguration parmeter to qtc.conf, The list of configuration parameters is as follows:
 
-	```
 	poa=1
 	token-name=CUP
 	genesis-input=world cup
