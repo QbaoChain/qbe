@@ -268,7 +268,7 @@ then
 	    echo ""
 	    ./bin/gbuild -j ${proc} -m ${mem} --commit qtum=${COMMIT},cpp-eth-qtum=develop --url qtum=${url},cpp-eth-qtum=${ethurl} ../qtum/contrib/gitian-descriptors/gitian-linux.yml
 	    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../qtum/contrib/gitian-descriptors/gitian-linux.yml
-	    mv build/out/qtum-*.tar.gz build/out/src/qtum-*.tar.gz ../qtum-binaries/${VERSION}
+	    mv build/out/qbe-*.tar.gz build/out/src/qbe-*.tar.gz ../qtum-binaries/${VERSION}
 	fi
 	# Windows
 	if [[ $windows = true ]]
@@ -278,8 +278,8 @@ then
 	    echo ""
 	    ./bin/gbuild -j ${proc} -m ${mem} --commit qtum=${COMMIT},cpp-eth-qtum=develop --url qtum=${url},cpp-eth-qtum=${ethurl} ../qtum/contrib/gitian-descriptors/gitian-win.yml
 	    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../qtum/contrib/gitian-descriptors/gitian-win.yml
-	    mv build/out/qtum-*-win-unsigned.tar.gz inputs/qtum-win-unsigned.tar.gz
-	    mv build/out/qtum-*.zip build/out/qtum-*.exe ../qtum-binaries/${VERSION}
+	    mv build/out/qbe-*-win-unsigned.tar.gz inputs/qbe-win-unsigned.tar.gz
+	    mv build/out/qbe-*.zip build/out/qbe-*.exe ../qbe-binaries/${VERSION}
 	fi
 	# Mac OSX
 	if [[ $osx = true ]]
@@ -289,8 +289,8 @@ then
 	    echo ""
 	    ./bin/gbuild -j ${proc} -m ${mem} --commit qtum=${COMMIT},cpp-eth-qtum=develop --url qtum=${url},cpp-eth-qtum=${ethurl} ../qtum/contrib/gitian-descriptors/gitian-osx.yml
 	    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../qtum/contrib/gitian-descriptors/gitian-osx.yml
-	    mv build/out/qtum-*-osx-unsigned.tar.gz inputs/qtum-osx-unsigned.tar.gz
-	    mv build/out/qtum-*.tar.gz build/out/qtum-*.dmg ../qtum-binaries/${VERSION}
+	    mv build/out/qbe-*-osx-unsigned.tar.gz inputs/qbe-osx-unsigned.tar.gz
+	    mv build/out/qbe-*.tar.gz build/out/qbe-*.dmg ../qtum-binaries/${VERSION}
 	fi
 	popd
 
@@ -359,8 +359,8 @@ then
 	    echo ""
 	    ./bin/gbuild -i --commit signature=${COMMIT} ../qtum/contrib/gitian-descriptors/gitian-win-signer.yml
 	    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../qtum/contrib/gitian-descriptors/gitian-win-signer.yml
-	    mv build/out/qtum-*win64-setup.exe ../qtum-binaries/${VERSION}
-	    mv build/out/qtum-*win32-setup.exe ../qtum-binaries/${VERSION}
+	    mv build/out/qbe-*win64-setup.exe ../qtum-binaries/${VERSION}
+	    mv build/out/qbe-*win32-setup.exe ../qtum-binaries/${VERSION}
 	fi
 	# Sign Mac OSX
 	if [[ $osx = true ]]
@@ -370,7 +370,7 @@ then
 	    echo ""
 	    ./bin/gbuild -i --commit signature=master ../qtum/contrib/gitian-descriptors/gitian-osx-signer.yml
 	    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../qtum/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    mv build/out/qtum-osx-signed.dmg ../qtum-binaries/${VERSION}/qtum-${VERSION}-osx.dmg
+	    mv build/out/qbe-osx-signed.dmg ../qtum-binaries/${VERSION}/qbe-${VERSION}-osx.dmg
 	fi
 	popd
 

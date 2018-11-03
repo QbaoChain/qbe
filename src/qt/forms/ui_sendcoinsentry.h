@@ -474,7 +474,7 @@ public:
         SendCoins->setToolTip(QApplication::translate("SendCoinsEntry", "This is a normal payment.", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        messageTextLabel->setToolTip(QApplication::translate("SendCoinsEntry", "A message that was attached to the qtum: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Qtum network.", nullptr));
+        messageTextLabel->setToolTip(QApplication::translate("SendCoinsEntry", "A message that was attached to the qtum: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Qbe network.", nullptr));
 #endif // QT_NO_TOOLTIP
         payToLabel->setText(QApplication::translate("SendCoinsEntry", "Pay &To:", nullptr));
 #ifndef QT_NO_TOOLTIP

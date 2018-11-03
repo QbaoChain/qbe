@@ -122,8 +122,8 @@ bin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
 	$(am__EXEEXT_4) $(am__EXEEXT_5) $(am__EXEEXT_6)
 noinst_PROGRAMS = $(am__EXEEXT_7)
 TESTS = $(am__EXEEXT_3) $(am__EXEEXT_6)
-@BUILD_BITCOIND_TRUE@am__append_1 = qtumd
-@BUILD_BITCOIN_UTILS_TRUE@am__append_2 = qtum-cli qtum-tx
+@BUILD_BITCOIND_TRUE@am__append_1 = qbed
+@BUILD_BITCOIN_UTILS_TRUE@am__append_2 = qbe-cli qbe-tx
 @EXPERIMENTAL_ASM_TRUE@am__append_3 = crypto/sha256_sse4.cpp
 
 #only added json_spirit so that `make dist` works properly
@@ -169,7 +169,7 @@ TESTS = $(am__EXEEXT_3) $(am__EXEEXT_6)
 @ENABLE_BENCH_TRUE@@ENABLE_WALLET_TRUE@am__append_30 = bench/coin_selection.cpp
 @ENABLE_BENCH_TRUE@@ENABLE_WALLET_TRUE@am__append_31 = $(LIBBITCOIN_WALLET) $(LIBBITCOIN_CRYPTO)
 @ENABLE_BENCH_TRUE@am__append_32 = $(CLEAN_BITCOIN_BENCH)
-@ENABLE_QT_TRUE@am__append_33 = qt/qtum-qt
+@ENABLE_QT_TRUE@am__append_33 = qt/qbe-qt
 @ENABLE_QT_TRUE@am__append_34 = qt/libbitcoinqt.a
 @ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@am__append_35 = $(BITCOIN_QT_WINDOWS_CPP)
 @ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@am__append_36 = $(BITCOIN_QT_WALLET_CPP)
@@ -227,12 +227,12 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/src/config/bitcoin-config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-@BUILD_BITCOIND_TRUE@am__EXEEXT_1 = qtumd$(EXEEXT)
-@BUILD_BITCOIN_UTILS_TRUE@am__EXEEXT_2 = qtum-cli$(EXEEXT) \
-@BUILD_BITCOIN_UTILS_TRUE@	qtum-tx$(EXEEXT)
+@BUILD_BITCOIND_TRUE@am__EXEEXT_1 = qbed$(EXEEXT)
+@BUILD_BITCOIN_UTILS_TRUE@am__EXEEXT_2 = qbe-cli$(EXEEXT) \
+@BUILD_BITCOIN_UTILS_TRUE@	qbe-tx$(EXEEXT)
 @ENABLE_TESTS_TRUE@am__EXEEXT_3 = test/test_qtum$(EXEEXT)
 @ENABLE_BENCH_TRUE@am__EXEEXT_4 = bench/bench_qtum$(EXEEXT)
-@ENABLE_QT_TRUE@am__EXEEXT_5 = qt/qtum-qt$(EXEEXT)
+@ENABLE_QT_TRUE@am__EXEEXT_5 = qt/qbe-qt$(EXEEXT)
 @ENABLE_QT_TESTS_TRUE@am__EXEEXT_6 = qt/test/test_qtum-qt$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(includedir)"
@@ -1457,23 +1457,66 @@ bench_bench_qtum_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(bench_bench_qtum_CXXFLAGS) $(CXXFLAGS) \
 	$(bench_bench_qtum_LDFLAGS) $(LDFLAGS) -o $@
-am__qt_qtum_qt_SOURCES_DIST = qt/bitcoin.cpp qt/macdockiconhandler.mm \
+am__qbe_cli_SOURCES_DIST = bitcoin-cli.cpp bitcoin-cli-res.rc
+@TARGET_WINDOWS_TRUE@am__objects_24 = bitcoin-cli-res.$(OBJEXT)
+am_qbe_cli_OBJECTS = qbe_cli-bitcoin-cli.$(OBJEXT) $(am__objects_24)
+qbe_cli_OBJECTS = $(am_qbe_cli_OBJECTS)
+qbe_cli_DEPENDENCIES = $(LIBBITCOIN_CLI) $(am__DEPENDENCIES_4) \
+	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(am__DEPENDENCIES_1) \
+	$(LIBLEVELDB_SSE42) $(am__DEPENDENCIES_2) $(LIBCRYPTOPP) \
+	$(LIBSECP256K1) $(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3)
+qbe_cli_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(qbe_cli_CXXFLAGS) \
+	$(CXXFLAGS) $(qbe_cli_LDFLAGS) $(LDFLAGS) -o $@
+am__qbe_tx_SOURCES_DIST = bitcoin-tx.cpp consensus/consensus.cpp \
+	bitcoin-tx-res.rc
+@TARGET_WINDOWS_TRUE@am__objects_25 = bitcoin-tx-res.$(OBJEXT)
+am_qbe_tx_OBJECTS = qbe_tx-bitcoin-tx.$(OBJEXT) \
+	consensus/qbe_tx-consensus.$(OBJEXT) $(am__objects_25)
+qbe_tx_OBJECTS = $(am_qbe_tx_OBJECTS)
+qbe_tx_DEPENDENCIES = $(am__DEPENDENCIES_4) $(LIBBITCOIN_COMMON) \
+	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) \
+	$(LIBBITCOIN_CRYPTO) $(am__DEPENDENCIES_1) $(LIBLEVELDB_SSE42) \
+	$(am__DEPENDENCIES_2) $(LIBCRYPTOPP) $(LIBSECP256K1) \
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
+	$(am__DEPENDENCIES_3)
+qbe_tx_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(qbe_tx_CXXFLAGS) \
+	$(CXXFLAGS) $(qbe_tx_LDFLAGS) $(LDFLAGS) -o $@
+am__qbed_SOURCES_DIST = bitcoind.cpp bitcoind-res.rc
+@TARGET_WINDOWS_TRUE@am__objects_26 = bitcoind-res.$(OBJEXT)
+am_qbed_OBJECTS = qbed-bitcoind.$(OBJEXT) $(am__objects_26)
+qbed_OBJECTS = $(am_qbed_OBJECTS)
+qbed_DEPENDENCIES = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) \
+	$(am__DEPENDENCIES_4) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET) \
+	$(LIBBITCOIN_ZMQ) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) \
+	$(am__DEPENDENCIES_1) $(LIBLEVELDB_SSE42) \
+	$(am__DEPENDENCIES_2) $(LIBCRYPTOPP) $(LIBSECP256K1) \
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3)
+qbed_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(qbed_CXXFLAGS) \
+	$(CXXFLAGS) $(qbed_LDFLAGS) $(LDFLAGS) -o $@
+am__qt_qbe_qt_SOURCES_DIST = qt/bitcoin.cpp qt/macdockiconhandler.mm \
 	qt/macnotificationhandler.mm qt/res/bitcoin-qt-res.rc
-@ENABLE_QT_TRUE@am__objects_24 =  \
-@ENABLE_QT_TRUE@	qt/qtum_qt-macdockiconhandler.$(OBJEXT) \
-@ENABLE_QT_TRUE@	qt/qtum_qt-macnotificationhandler.$(OBJEXT)
-@ENABLE_QT_TRUE@@TARGET_DARWIN_TRUE@am__objects_25 =  \
-@ENABLE_QT_TRUE@@TARGET_DARWIN_TRUE@	$(am__objects_24)
-@ENABLE_QT_TRUE@am__objects_26 = qt/res/bitcoin-qt-res.$(OBJEXT)
-@ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@am__objects_27 =  \
-@ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@	$(am__objects_26)
-@ENABLE_QT_TRUE@am_qt_qtum_qt_OBJECTS = qt/qtum_qt-bitcoin.$(OBJEXT) \
-@ENABLE_QT_TRUE@	$(am__objects_25) $(am__objects_27)
-qt_qtum_qt_OBJECTS = $(am_qt_qtum_qt_OBJECTS)
+@ENABLE_QT_TRUE@am__objects_27 =  \
+@ENABLE_QT_TRUE@	qt/qbe_qt-macdockiconhandler.$(OBJEXT) \
+@ENABLE_QT_TRUE@	qt/qbe_qt-macnotificationhandler.$(OBJEXT)
+@ENABLE_QT_TRUE@@TARGET_DARWIN_TRUE@am__objects_28 =  \
+@ENABLE_QT_TRUE@@TARGET_DARWIN_TRUE@	$(am__objects_27)
+@ENABLE_QT_TRUE@am__objects_29 = qt/res/bitcoin-qt-res.$(OBJEXT)
+@ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@am__objects_30 =  \
+@ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@	$(am__objects_29)
+@ENABLE_QT_TRUE@am_qt_qbe_qt_OBJECTS = qt/qbe_qt-bitcoin.$(OBJEXT) \
+@ENABLE_QT_TRUE@	$(am__objects_28) $(am__objects_30)
+qt_qbe_qt_OBJECTS = $(am_qt_qbe_qt_OBJECTS)
 @ENABLE_QT_TRUE@@ENABLE_ZMQ_TRUE@am__DEPENDENCIES_6 =  \
 @ENABLE_QT_TRUE@@ENABLE_ZMQ_TRUE@	$(LIBBITCOIN_ZMQ) \
 @ENABLE_QT_TRUE@@ENABLE_ZMQ_TRUE@	$(am__DEPENDENCIES_3)
-@ENABLE_QT_TRUE@qt_qtum_qt_DEPENDENCIES = qt/libbitcoinqt.a \
+@ENABLE_QT_TRUE@qt_qbe_qt_DEPENDENCIES = qt/libbitcoinqt.a \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_SERVER) $(am__append_39) \
 @ENABLE_QT_TRUE@	$(am__DEPENDENCIES_6) $(LIBBITCOIN_CLI) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
@@ -1487,9 +1530,9 @@ qt_qtum_qt_OBJECTS = $(am_qt_qtum_qt_OBJECTS)
 @ENABLE_QT_TRUE@	$(am__DEPENDENCIES_3) $(LIBSECP256K1) \
 @ENABLE_QT_TRUE@	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
 @ENABLE_QT_TRUE@	$(LIBCRYPTOPP)
-qt_qtum_qt_LINK = $(LIBTOOL) $(AM_V_lt) $(qt_qtum_qt_LIBTOOLFLAGS) \
+qt_qbe_qt_LINK = $(LIBTOOL) $(AM_V_lt) $(qt_qbe_qt_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(OBJCXXLD) $(AM_OBJCXXFLAGS) \
-	$(OBJCXXFLAGS) $(qt_qtum_qt_LDFLAGS) $(LDFLAGS) -o $@
+	$(OBJCXXFLAGS) $(qt_qbe_qt_LDFLAGS) $(LDFLAGS) -o $@
 am__qt_test_test_qtum_qt_SOURCES_DIST = qt/test/compattests.cpp \
 	qt/test/rpcnestedtests.cpp qt/test/test_main.cpp \
 	qt/test/uritests.cpp qt/test/compattests.h \
@@ -1498,24 +1541,24 @@ am__qt_test_test_qtum_qt_SOURCES_DIST = qt/test/compattests.cpp \
 	qt/test/wallettests.h test/test_bitcoin.cpp \
 	test/test_bitcoin.h qt/test/paymentservertests.cpp \
 	qt/test/wallettests.cpp wallet/test/wallet_test_fixture.cpp
-@ENABLE_QT_TESTS_TRUE@am__objects_28 = test/qt_test_test_qtum_qt-test_bitcoin.$(OBJEXT)
-@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__objects_29 = qt/test/test_qtum_qt-paymentservertests.$(OBJEXT) \
+@ENABLE_QT_TESTS_TRUE@am__objects_31 = test/qt_test_test_qtum_qt-test_bitcoin.$(OBJEXT)
+@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__objects_32 = qt/test/test_qtum_qt-paymentservertests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@	qt/test/test_qtum_qt-wallettests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@	wallet/test/qt_test_test_qtum_qt-wallet_test_fixture.$(OBJEXT)
 @ENABLE_QT_TESTS_TRUE@am_qt_test_test_qtum_qt_OBJECTS = qt/test/test_qtum_qt-compattests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@	qt/test/test_qtum_qt-rpcnestedtests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@	qt/test/test_qtum_qt-test_main.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@	qt/test/test_qtum_qt-uritests.$(OBJEXT) \
-@ENABLE_QT_TESTS_TRUE@	$(am__objects_4) $(am__objects_28) \
-@ENABLE_QT_TESTS_TRUE@	$(am__objects_4) $(am__objects_29)
-@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__objects_30 = qt/test/test_qtum_qt-moc_paymentservertests.$(OBJEXT) \
+@ENABLE_QT_TESTS_TRUE@	$(am__objects_4) $(am__objects_31) \
+@ENABLE_QT_TESTS_TRUE@	$(am__objects_4) $(am__objects_32)
+@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__objects_33 = qt/test/test_qtum_qt-moc_paymentservertests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@	qt/test/test_qtum_qt-moc_wallettests.$(OBJEXT)
-@ENABLE_QT_TESTS_TRUE@am__objects_31 = qt/test/test_qtum_qt-moc_compattests.$(OBJEXT) \
+@ENABLE_QT_TESTS_TRUE@am__objects_34 = qt/test/test_qtum_qt-moc_compattests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@	qt/test/test_qtum_qt-moc_rpcnestedtests.$(OBJEXT) \
 @ENABLE_QT_TESTS_TRUE@	qt/test/test_qtum_qt-moc_uritests.$(OBJEXT) \
-@ENABLE_QT_TESTS_TRUE@	$(am__objects_30)
+@ENABLE_QT_TESTS_TRUE@	$(am__objects_33)
 @ENABLE_QT_TESTS_TRUE@nodist_qt_test_test_qtum_qt_OBJECTS =  \
-@ENABLE_QT_TESTS_TRUE@	$(am__objects_31)
+@ENABLE_QT_TESTS_TRUE@	$(am__objects_34)
 qt_test_test_qtum_qt_OBJECTS = $(am_qt_test_test_qtum_qt_OBJECTS) \
 	$(nodist_qt_test_test_qtum_qt_OBJECTS)
 @ENABLE_QT_TESTS_TRUE@@ENABLE_ZMQ_TRUE@am__DEPENDENCIES_7 =  \
@@ -1548,49 +1591,6 @@ qt_test_test_qtum_qt_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(qt_test_test_qtum_qt_CXXFLAGS) $(CXXFLAGS) \
 	$(qt_test_test_qtum_qt_LDFLAGS) $(LDFLAGS) -o $@
-am__qtum_cli_SOURCES_DIST = bitcoin-cli.cpp bitcoin-cli-res.rc
-@TARGET_WINDOWS_TRUE@am__objects_32 = bitcoin-cli-res.$(OBJEXT)
-am_qtum_cli_OBJECTS = qtum_cli-bitcoin-cli.$(OBJEXT) $(am__objects_32)
-qtum_cli_OBJECTS = $(am_qtum_cli_OBJECTS)
-qtum_cli_DEPENDENCIES = $(LIBBITCOIN_CLI) $(am__DEPENDENCIES_4) \
-	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(am__DEPENDENCIES_1) \
-	$(LIBLEVELDB_SSE42) $(am__DEPENDENCIES_2) $(LIBCRYPTOPP) \
-	$(LIBSECP256K1) $(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3)
-qtum_cli_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(qtum_cli_CXXFLAGS) \
-	$(CXXFLAGS) $(qtum_cli_LDFLAGS) $(LDFLAGS) -o $@
-am__qtum_tx_SOURCES_DIST = bitcoin-tx.cpp consensus/consensus.cpp \
-	bitcoin-tx-res.rc
-@TARGET_WINDOWS_TRUE@am__objects_33 = bitcoin-tx-res.$(OBJEXT)
-am_qtum_tx_OBJECTS = qtum_tx-bitcoin-tx.$(OBJEXT) \
-	consensus/qtum_tx-consensus.$(OBJEXT) $(am__objects_33)
-qtum_tx_OBJECTS = $(am_qtum_tx_OBJECTS)
-qtum_tx_DEPENDENCIES = $(am__DEPENDENCIES_4) $(LIBBITCOIN_COMMON) \
-	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) \
-	$(LIBBITCOIN_CRYPTO) $(am__DEPENDENCIES_1) $(LIBLEVELDB_SSE42) \
-	$(am__DEPENDENCIES_2) $(LIBCRYPTOPP) $(LIBSECP256K1) \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
-	$(am__DEPENDENCIES_3)
-qtum_tx_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(qtum_tx_CXXFLAGS) \
-	$(CXXFLAGS) $(qtum_tx_LDFLAGS) $(LDFLAGS) -o $@
-am__qtumd_SOURCES_DIST = bitcoind.cpp bitcoind-res.rc
-@TARGET_WINDOWS_TRUE@am__objects_34 = bitcoind-res.$(OBJEXT)
-am_qtumd_OBJECTS = qtumd-bitcoind.$(OBJEXT) $(am__objects_34)
-qtumd_OBJECTS = $(am_qtumd_OBJECTS)
-qtumd_DEPENDENCIES = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) \
-	$(am__DEPENDENCIES_4) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET) \
-	$(LIBBITCOIN_ZMQ) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) \
-	$(am__DEPENDENCIES_1) $(LIBLEVELDB_SSE42) \
-	$(am__DEPENDENCIES_2) $(LIBCRYPTOPP) $(LIBSECP256K1) \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3) \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_3)
-qtumd_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(qtumd_CXXFLAGS) \
-	$(CXXFLAGS) $(qtumd_LDFLAGS) $(LDFLAGS) -o $@
 am__test_test_qtum_SOURCES_DIST = test/arith_uint256_tests.cpp \
 	test/scriptnum10.h test/addrman_tests.cpp \
 	test/amount_tests.cpp test/allocator_tests.cpp \
@@ -1817,9 +1817,8 @@ am__depfiles_remade = ./$(DEPDIR)/libbitcoin_common_a-base58.Po \
 	./$(DEPDIR)/libbitcoinconsensus_la-pubkey.Plo \
 	./$(DEPDIR)/libbitcoinconsensus_la-uint256.Plo \
 	./$(DEPDIR)/libbitcoinconsensus_la-utilstrencodings.Plo \
-	./$(DEPDIR)/qtum_cli-bitcoin-cli.Po \
-	./$(DEPDIR)/qtum_tx-bitcoin-tx.Po \
-	./$(DEPDIR)/qtumd-bitcoind.Po \
+	./$(DEPDIR)/qbe_cli-bitcoin-cli.Po \
+	./$(DEPDIR)/qbe_tx-bitcoin-tx.Po ./$(DEPDIR)/qbed-bitcoind.Po \
 	bench/$(DEPDIR)/bench_qtum-Examples.Po \
 	bench/$(DEPDIR)/bench_qtum-base58.Po \
 	bench/$(DEPDIR)/bench_qtum-bench.Po \
@@ -1844,7 +1843,7 @@ am__depfiles_remade = ./$(DEPDIR)/libbitcoin_common_a-base58.Po \
 	consensus/$(DEPDIR)/libbitcoin_server_a-consensus.Po \
 	consensus/$(DEPDIR)/libbitcoin_server_a-tx_verify.Po \
 	consensus/$(DEPDIR)/libbitcoinconsensus_la-merkle.Plo \
-	consensus/$(DEPDIR)/qtum_tx-consensus.Po \
+	consensus/$(DEPDIR)/qbe_tx-consensus.Po \
 	cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Base64.Po \
 	cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Common.Po \
 	cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-CommonData.Po \
@@ -2210,9 +2209,9 @@ am__depfiles_remade = ./$(DEPDIR)/libbitcoin_common_a-base58.Po \
 	qt/$(DEPDIR)/libbitcoinqt_a-walletmodeltransaction.Po \
 	qt/$(DEPDIR)/libbitcoinqt_a-walletview.Po \
 	qt/$(DEPDIR)/libbitcoinqt_a-winshutdownmonitor.Po \
-	qt/$(DEPDIR)/qtum_qt-bitcoin.Po \
-	qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Po \
-	qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Po \
+	qt/$(DEPDIR)/qbe_qt-bitcoin.Po \
+	qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Po \
+	qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Po \
 	qt/test/$(DEPDIR)/test_qtum_qt-compattests.Po \
 	qt/test/$(DEPDIR)/test_qtum_qt-moc_compattests.Po \
 	qt/test/$(DEPDIR)/test_qtum_qt-moc_paymentservertests.Po \
@@ -2398,11 +2397,11 @@ SOURCES = $(crypto_libbitcoin_crypto_a_SOURCES) \
 	$(qt_libbitcoinqt_a_SOURCES) \
 	$(nodist_qt_libbitcoinqt_a_SOURCES) \
 	$(libbitcoinconsensus_la_SOURCES) $(bench_bench_qtum_SOURCES) \
-	$(nodist_bench_bench_qtum_SOURCES) $(qt_qtum_qt_SOURCES) \
+	$(nodist_bench_bench_qtum_SOURCES) $(qbe_cli_SOURCES) \
+	$(qbe_tx_SOURCES) $(qbed_SOURCES) $(qt_qbe_qt_SOURCES) \
 	$(qt_test_test_qtum_qt_SOURCES) \
-	$(nodist_qt_test_test_qtum_qt_SOURCES) $(qtum_cli_SOURCES) \
-	$(qtum_tx_SOURCES) $(qtumd_SOURCES) $(test_test_qtum_SOURCES) \
-	$(nodist_test_test_qtum_SOURCES) \
+	$(nodist_qt_test_test_qtum_qt_SOURCES) \
+	$(test_test_qtum_SOURCES) $(nodist_test_test_qtum_SOURCES) \
 	$(test_test_qtum_fuzzy_SOURCES)
 DIST_SOURCES = $(am__crypto_libbitcoin_crypto_a_SOURCES_DIST) \
 	$(cryptopp_libcryptopp_a_SOURCES) \
@@ -2419,10 +2418,10 @@ DIST_SOURCES = $(am__crypto_libbitcoin_crypto_a_SOURCES_DIST) \
 	$(am__qt_libbitcoinqt_a_SOURCES_DIST) \
 	$(am__libbitcoinconsensus_la_SOURCES_DIST) \
 	$(am__bench_bench_qtum_SOURCES_DIST) \
-	$(am__qt_qtum_qt_SOURCES_DIST) \
+	$(am__qbe_cli_SOURCES_DIST) $(am__qbe_tx_SOURCES_DIST) \
+	$(am__qbed_SOURCES_DIST) $(am__qt_qbe_qt_SOURCES_DIST) \
 	$(am__qt_test_test_qtum_qt_SOURCES_DIST) \
-	$(am__qtum_cli_SOURCES_DIST) $(am__qtum_tx_SOURCES_DIST) \
-	$(am__qtumd_SOURCES_DIST) $(am__test_test_qtum_SOURCES_DIST) \
+	$(am__test_test_qtum_SOURCES_DIST) \
 	$(am__test_test_qtum_fuzzy_SOURCES_DIST)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
@@ -3400,11 +3399,11 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-qtumd_SOURCES = bitcoind.cpp $(am__append_7)
-qtumd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtumd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtumd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qtumd_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) $(LIBUNIVALUE) \
+qbed_SOURCES = bitcoind.cpp $(am__append_7)
+qbed_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+qbed_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+qbed_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qbed_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) $(LIBUNIVALUE) \
 	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET) $(LIBBITCOIN_ZMQ) \
 	$(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBLEVELDB) \
 	$(LIBLEVELDB_SSE42) $(LIBMEMENV) $(LIBCRYPTOPP) \
@@ -3413,23 +3412,23 @@ qtumd_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) $(LIBUNIVALUE) \
 	$(EVENT_LIBS) $(ZMQ_LIBS)
 
 # bitcoin-cli binary #
-qtum_cli_SOURCES = bitcoin-cli.cpp $(am__append_8)
-qtum_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-qtum_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qtum_cli_LDADD = $(LIBBITCOIN_CLI) $(LIBUNIVALUE) $(LIBBITCOIN_UTIL) \
+qbe_cli_SOURCES = bitcoin-cli.cpp $(am__append_8)
+qbe_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+qbe_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+qbe_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qbe_cli_LDADD = $(LIBBITCOIN_CLI) $(LIBUNIVALUE) $(LIBBITCOIN_UTIL) \
 	$(LIBBITCOIN_CRYPTO) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) \
 	$(LIBMEMENV) $(LIBCRYPTOPP) $(LIBSECP256K1) $(BOOST_LIBS) \
 	$(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # bitcoin-tx binary #
-qtum_tx_SOURCES = bitcoin-tx.cpp consensus/consensus.cpp \
+qbe_tx_SOURCES = bitcoin-tx.cpp consensus/consensus.cpp \
 	$(am__append_9)
-qtum_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtum_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qtum_tx_LDADD = $(LIBUNIVALUE) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
+qbe_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+qbe_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+qbe_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qbe_tx_LDADD = $(LIBUNIVALUE) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
 	$(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBLEVELDB) \
 	$(LIBLEVELDB_SSE42) $(LIBMEMENV) $(LIBCRYPTOPP) \
 	$(LIBSECP256K1) $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS)
@@ -4324,13 +4323,13 @@ cryptopp_libcryptopp_a_SOURCES = cryptopp/cryptlib.cpp \
 @ENABLE_QT_TRUE@QT_FORMS_H = $(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:.ui=.h))))
 
 # bitcoin-qt binary #
-@ENABLE_QT_TRUE@qt_qtum_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+@ENABLE_QT_TRUE@qt_qbe_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
 @ENABLE_QT_TRUE@  $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS)
 
-@ENABLE_QT_TRUE@qt_qtum_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
-@ENABLE_QT_TRUE@qt_qtum_qt_SOURCES = qt/bitcoin.cpp $(am__append_37) \
+@ENABLE_QT_TRUE@qt_qbe_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+@ENABLE_QT_TRUE@qt_qbe_qt_SOURCES = qt/bitcoin.cpp $(am__append_37) \
 @ENABLE_QT_TRUE@	$(am__append_38)
-@ENABLE_QT_TRUE@qt_qtum_qt_LDADD = qt/libbitcoinqt.a \
+@ENABLE_QT_TRUE@qt_qbe_qt_LDADD = qt/libbitcoinqt.a \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_SERVER) $(am__append_39) \
 @ENABLE_QT_TRUE@	$(am__append_40) $(LIBBITCOIN_CLI) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
@@ -4345,8 +4344,8 @@ cryptopp_libcryptopp_a_SOURCES = cryptopp/cryptlib.cpp \
 @ENABLE_QT_TRUE@	$(LIBETHASH) $(LIBETHCORE) $(LIBDEVCORE) \
 @ENABLE_QT_TRUE@	$(LIBJSONCPP) $(LIBEVM) $(LIBEVMCORE) \
 @ENABLE_QT_TRUE@	$(LIBDEVCRYPTO) $(LIBCRYPTOPP) $(LIBSCRYIPT)
-@ENABLE_QT_TRUE@qt_qtum_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-@ENABLE_QT_TRUE@qt_qtum_qt_LIBTOOLFLAGS = --tag CXX
+@ENABLE_QT_TRUE@qt_qbe_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+@ENABLE_QT_TRUE@qt_qbe_qt_LIBTOOLFLAGS = --tag CXX
 
 #locale/foo.ts -> locale/foo.qm
 @ENABLE_QT_TRUE@QT_QM = $(QT_TS:.ts=.qm)
@@ -5762,11 +5761,25 @@ bench/bench_qtum-coin_selection.$(OBJEXT): bench/$(am__dirstamp) \
 bench/bench_qtum$(EXEEXT): $(bench_bench_qtum_OBJECTS) $(bench_bench_qtum_DEPENDENCIES) $(EXTRA_bench_bench_qtum_DEPENDENCIES) bench/$(am__dirstamp)
 	@rm -f bench/bench_qtum$(EXEEXT)
 	$(AM_V_CXXLD)$(bench_bench_qtum_LINK) $(bench_bench_qtum_OBJECTS) $(bench_bench_qtum_LDADD) $(LIBS)
-qt/qtum_qt-bitcoin.$(OBJEXT): qt/$(am__dirstamp) \
+
+qbe-cli$(EXEEXT): $(qbe_cli_OBJECTS) $(qbe_cli_DEPENDENCIES) $(EXTRA_qbe_cli_DEPENDENCIES) 
+	@rm -f qbe-cli$(EXEEXT)
+	$(AM_V_CXXLD)$(qbe_cli_LINK) $(qbe_cli_OBJECTS) $(qbe_cli_LDADD) $(LIBS)
+consensus/qbe_tx-consensus.$(OBJEXT): consensus/$(am__dirstamp) \
+	consensus/$(DEPDIR)/$(am__dirstamp)
+
+qbe-tx$(EXEEXT): $(qbe_tx_OBJECTS) $(qbe_tx_DEPENDENCIES) $(EXTRA_qbe_tx_DEPENDENCIES) 
+	@rm -f qbe-tx$(EXEEXT)
+	$(AM_V_CXXLD)$(qbe_tx_LINK) $(qbe_tx_OBJECTS) $(qbe_tx_LDADD) $(LIBS)
+
+qbed$(EXEEXT): $(qbed_OBJECTS) $(qbed_DEPENDENCIES) $(EXTRA_qbed_DEPENDENCIES) 
+	@rm -f qbed$(EXEEXT)
+	$(AM_V_CXXLD)$(qbed_LINK) $(qbed_OBJECTS) $(qbed_LDADD) $(LIBS)
+qt/qbe_qt-bitcoin.$(OBJEXT): qt/$(am__dirstamp) \
 	qt/$(DEPDIR)/$(am__dirstamp)
-qt/qtum_qt-macdockiconhandler.$(OBJEXT): qt/$(am__dirstamp) \
+qt/qbe_qt-macdockiconhandler.$(OBJEXT): qt/$(am__dirstamp) \
 	qt/$(DEPDIR)/$(am__dirstamp)
-qt/qtum_qt-macnotificationhandler.$(OBJEXT): qt/$(am__dirstamp) \
+qt/qbe_qt-macnotificationhandler.$(OBJEXT): qt/$(am__dirstamp) \
 	qt/$(DEPDIR)/$(am__dirstamp)
 qt/res/$(am__dirstamp):
 	@$(MKDIR_P) qt/res
@@ -5777,9 +5790,9 @@ qt/res/$(DEPDIR)/$(am__dirstamp):
 qt/res/bitcoin-qt-res.$(OBJEXT): qt/res/$(am__dirstamp) \
 	qt/res/$(DEPDIR)/$(am__dirstamp)
 
-qt/qtum-qt$(EXEEXT): $(qt_qtum_qt_OBJECTS) $(qt_qtum_qt_DEPENDENCIES) $(EXTRA_qt_qtum_qt_DEPENDENCIES) qt/$(am__dirstamp)
-	@rm -f qt/qtum-qt$(EXEEXT)
-	$(AM_V_OBJCXXLD)$(qt_qtum_qt_LINK) $(qt_qtum_qt_OBJECTS) $(qt_qtum_qt_LDADD) $(LIBS)
+qt/qbe-qt$(EXEEXT): $(qt_qbe_qt_OBJECTS) $(qt_qbe_qt_DEPENDENCIES) $(EXTRA_qt_qbe_qt_DEPENDENCIES) qt/$(am__dirstamp)
+	@rm -f qt/qbe-qt$(EXEEXT)
+	$(AM_V_OBJCXXLD)$(qt_qbe_qt_LINK) $(qt_qbe_qt_OBJECTS) $(qt_qbe_qt_LDADD) $(LIBS)
 qt/test/$(am__dirstamp):
 	@$(MKDIR_P) qt/test
 	@: > qt/test/$(am__dirstamp)
@@ -5829,20 +5842,6 @@ qt/test/test_qtum_qt-moc_wallettests.$(OBJEXT):  \
 qt/test/test_qtum-qt$(EXEEXT): $(qt_test_test_qtum_qt_OBJECTS) $(qt_test_test_qtum_qt_DEPENDENCIES) $(EXTRA_qt_test_test_qtum_qt_DEPENDENCIES) qt/test/$(am__dirstamp)
 	@rm -f qt/test/test_qtum-qt$(EXEEXT)
 	$(AM_V_CXXLD)$(qt_test_test_qtum_qt_LINK) $(qt_test_test_qtum_qt_OBJECTS) $(qt_test_test_qtum_qt_LDADD) $(LIBS)
-
-qtum-cli$(EXEEXT): $(qtum_cli_OBJECTS) $(qtum_cli_DEPENDENCIES) $(EXTRA_qtum_cli_DEPENDENCIES) 
-	@rm -f qtum-cli$(EXEEXT)
-	$(AM_V_CXXLD)$(qtum_cli_LINK) $(qtum_cli_OBJECTS) $(qtum_cli_LDADD) $(LIBS)
-consensus/qtum_tx-consensus.$(OBJEXT): consensus/$(am__dirstamp) \
-	consensus/$(DEPDIR)/$(am__dirstamp)
-
-qtum-tx$(EXEEXT): $(qtum_tx_OBJECTS) $(qtum_tx_DEPENDENCIES) $(EXTRA_qtum_tx_DEPENDENCIES) 
-	@rm -f qtum-tx$(EXEEXT)
-	$(AM_V_CXXLD)$(qtum_tx_LINK) $(qtum_tx_OBJECTS) $(qtum_tx_LDADD) $(LIBS)
-
-qtumd$(EXEEXT): $(qtumd_OBJECTS) $(qtumd_DEPENDENCIES) $(EXTRA_qtumd_DEPENDENCIES) 
-	@rm -f qtumd$(EXEEXT)
-	$(AM_V_CXXLD)$(qtumd_LINK) $(qtumd_OBJECTS) $(qtumd_LDADD) $(LIBS)
 test/test_qtum-arith_uint256_tests.$(OBJEXT): test/$(am__dirstamp) \
 	test/$(DEPDIR)/$(am__dirstamp)
 test/test_qtum-addrman_tests.$(OBJEXT): test/$(am__dirstamp) \
@@ -6110,9 +6109,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoinconsensus_la-pubkey.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoinconsensus_la-uint256.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoinconsensus_la-utilstrencodings.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qtum_cli-bitcoin-cli.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qtum_tx-bitcoin-tx.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qtumd-bitcoind.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qbe_cli-bitcoin-cli.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qbe_tx-bitcoin-tx.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qbed-bitcoind.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bench/$(DEPDIR)/bench_qtum-Examples.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bench/$(DEPDIR)/bench_qtum-base58.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bench/$(DEPDIR)/bench_qtum-bench.Po@am__quote@ # am--include-marker
@@ -6137,7 +6136,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@consensus/$(DEPDIR)/libbitcoin_server_a-consensus.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@consensus/$(DEPDIR)/libbitcoin_server_a-tx_verify.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@consensus/$(DEPDIR)/libbitcoinconsensus_la-merkle.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@consensus/$(DEPDIR)/qtum_tx-consensus.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@consensus/$(DEPDIR)/qbe_tx-consensus.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Base64.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Common.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-CommonData.Po@am__quote@ # am--include-marker
@@ -6503,9 +6502,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/libbitcoinqt_a-walletmodeltransaction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/libbitcoinqt_a-walletview.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/libbitcoinqt_a-winshutdownmonitor.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/qtum_qt-bitcoin.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/qbe_qt-bitcoin.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@qt/test/$(DEPDIR)/test_qtum_qt-compattests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@qt/test/$(DEPDIR)/test_qtum_qt-moc_compattests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@qt/test/$(DEPDIR)/test_qtum_qt-moc_paymentservertests.Po@am__quote@ # am--include-marker
@@ -13265,19 +13264,75 @@ bench/bench_qtum-coin_selection.obj: bench/coin_selection.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(bench_bench_qtum_CPPFLAGS) $(CPPFLAGS) $(bench_bench_qtum_CXXFLAGS) $(CXXFLAGS) -c -o bench/bench_qtum-coin_selection.obj `if test -f 'bench/coin_selection.cpp'; then $(CYGPATH_W) 'bench/coin_selection.cpp'; else $(CYGPATH_W) '$(srcdir)/bench/coin_selection.cpp'; fi`
 
-qt/qtum_qt-bitcoin.o: qt/bitcoin.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qtum_qt_CXXFLAGS) $(CXXFLAGS) -MT qt/qtum_qt-bitcoin.o -MD -MP -MF qt/$(DEPDIR)/qtum_qt-bitcoin.Tpo -c -o qt/qtum_qt-bitcoin.o `test -f 'qt/bitcoin.cpp' || echo '$(srcdir)/'`qt/bitcoin.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qtum_qt-bitcoin.Tpo qt/$(DEPDIR)/qtum_qt-bitcoin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='qt/bitcoin.cpp' object='qt/qtum_qt-bitcoin.o' libtool=no @AMDEPBACKSLASH@
+qbe_cli-bitcoin-cli.o: bitcoin-cli.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_cli_CPPFLAGS) $(CPPFLAGS) $(qbe_cli_CXXFLAGS) $(CXXFLAGS) -MT qbe_cli-bitcoin-cli.o -MD -MP -MF $(DEPDIR)/qbe_cli-bitcoin-cli.Tpo -c -o qbe_cli-bitcoin-cli.o `test -f 'bitcoin-cli.cpp' || echo '$(srcdir)/'`bitcoin-cli.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qbe_cli-bitcoin-cli.Tpo $(DEPDIR)/qbe_cli-bitcoin-cli.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-cli.cpp' object='qbe_cli-bitcoin-cli.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qtum_qt_CXXFLAGS) $(CXXFLAGS) -c -o qt/qtum_qt-bitcoin.o `test -f 'qt/bitcoin.cpp' || echo '$(srcdir)/'`qt/bitcoin.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_cli_CPPFLAGS) $(CPPFLAGS) $(qbe_cli_CXXFLAGS) $(CXXFLAGS) -c -o qbe_cli-bitcoin-cli.o `test -f 'bitcoin-cli.cpp' || echo '$(srcdir)/'`bitcoin-cli.cpp
 
-qt/qtum_qt-bitcoin.obj: qt/bitcoin.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qtum_qt_CXXFLAGS) $(CXXFLAGS) -MT qt/qtum_qt-bitcoin.obj -MD -MP -MF qt/$(DEPDIR)/qtum_qt-bitcoin.Tpo -c -o qt/qtum_qt-bitcoin.obj `if test -f 'qt/bitcoin.cpp'; then $(CYGPATH_W) 'qt/bitcoin.cpp'; else $(CYGPATH_W) '$(srcdir)/qt/bitcoin.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qtum_qt-bitcoin.Tpo qt/$(DEPDIR)/qtum_qt-bitcoin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='qt/bitcoin.cpp' object='qt/qtum_qt-bitcoin.obj' libtool=no @AMDEPBACKSLASH@
+qbe_cli-bitcoin-cli.obj: bitcoin-cli.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_cli_CPPFLAGS) $(CPPFLAGS) $(qbe_cli_CXXFLAGS) $(CXXFLAGS) -MT qbe_cli-bitcoin-cli.obj -MD -MP -MF $(DEPDIR)/qbe_cli-bitcoin-cli.Tpo -c -o qbe_cli-bitcoin-cli.obj `if test -f 'bitcoin-cli.cpp'; then $(CYGPATH_W) 'bitcoin-cli.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-cli.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qbe_cli-bitcoin-cli.Tpo $(DEPDIR)/qbe_cli-bitcoin-cli.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-cli.cpp' object='qbe_cli-bitcoin-cli.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qtum_qt_CXXFLAGS) $(CXXFLAGS) -c -o qt/qtum_qt-bitcoin.obj `if test -f 'qt/bitcoin.cpp'; then $(CYGPATH_W) 'qt/bitcoin.cpp'; else $(CYGPATH_W) '$(srcdir)/qt/bitcoin.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_cli_CPPFLAGS) $(CPPFLAGS) $(qbe_cli_CXXFLAGS) $(CXXFLAGS) -c -o qbe_cli-bitcoin-cli.obj `if test -f 'bitcoin-cli.cpp'; then $(CYGPATH_W) 'bitcoin-cli.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-cli.cpp'; fi`
+
+qbe_tx-bitcoin-tx.o: bitcoin-tx.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -MT qbe_tx-bitcoin-tx.o -MD -MP -MF $(DEPDIR)/qbe_tx-bitcoin-tx.Tpo -c -o qbe_tx-bitcoin-tx.o `test -f 'bitcoin-tx.cpp' || echo '$(srcdir)/'`bitcoin-tx.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qbe_tx-bitcoin-tx.Tpo $(DEPDIR)/qbe_tx-bitcoin-tx.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-tx.cpp' object='qbe_tx-bitcoin-tx.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -c -o qbe_tx-bitcoin-tx.o `test -f 'bitcoin-tx.cpp' || echo '$(srcdir)/'`bitcoin-tx.cpp
+
+qbe_tx-bitcoin-tx.obj: bitcoin-tx.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -MT qbe_tx-bitcoin-tx.obj -MD -MP -MF $(DEPDIR)/qbe_tx-bitcoin-tx.Tpo -c -o qbe_tx-bitcoin-tx.obj `if test -f 'bitcoin-tx.cpp'; then $(CYGPATH_W) 'bitcoin-tx.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-tx.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qbe_tx-bitcoin-tx.Tpo $(DEPDIR)/qbe_tx-bitcoin-tx.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-tx.cpp' object='qbe_tx-bitcoin-tx.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -c -o qbe_tx-bitcoin-tx.obj `if test -f 'bitcoin-tx.cpp'; then $(CYGPATH_W) 'bitcoin-tx.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-tx.cpp'; fi`
+
+consensus/qbe_tx-consensus.o: consensus/consensus.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -MT consensus/qbe_tx-consensus.o -MD -MP -MF consensus/$(DEPDIR)/qbe_tx-consensus.Tpo -c -o consensus/qbe_tx-consensus.o `test -f 'consensus/consensus.cpp' || echo '$(srcdir)/'`consensus/consensus.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) consensus/$(DEPDIR)/qbe_tx-consensus.Tpo consensus/$(DEPDIR)/qbe_tx-consensus.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='consensus/consensus.cpp' object='consensus/qbe_tx-consensus.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -c -o consensus/qbe_tx-consensus.o `test -f 'consensus/consensus.cpp' || echo '$(srcdir)/'`consensus/consensus.cpp
+
+consensus/qbe_tx-consensus.obj: consensus/consensus.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -MT consensus/qbe_tx-consensus.obj -MD -MP -MF consensus/$(DEPDIR)/qbe_tx-consensus.Tpo -c -o consensus/qbe_tx-consensus.obj `if test -f 'consensus/consensus.cpp'; then $(CYGPATH_W) 'consensus/consensus.cpp'; else $(CYGPATH_W) '$(srcdir)/consensus/consensus.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) consensus/$(DEPDIR)/qbe_tx-consensus.Tpo consensus/$(DEPDIR)/qbe_tx-consensus.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='consensus/consensus.cpp' object='consensus/qbe_tx-consensus.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbe_tx_CPPFLAGS) $(CPPFLAGS) $(qbe_tx_CXXFLAGS) $(CXXFLAGS) -c -o consensus/qbe_tx-consensus.obj `if test -f 'consensus/consensus.cpp'; then $(CYGPATH_W) 'consensus/consensus.cpp'; else $(CYGPATH_W) '$(srcdir)/consensus/consensus.cpp'; fi`
+
+qbed-bitcoind.o: bitcoind.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbed_CPPFLAGS) $(CPPFLAGS) $(qbed_CXXFLAGS) $(CXXFLAGS) -MT qbed-bitcoind.o -MD -MP -MF $(DEPDIR)/qbed-bitcoind.Tpo -c -o qbed-bitcoind.o `test -f 'bitcoind.cpp' || echo '$(srcdir)/'`bitcoind.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qbed-bitcoind.Tpo $(DEPDIR)/qbed-bitcoind.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoind.cpp' object='qbed-bitcoind.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbed_CPPFLAGS) $(CPPFLAGS) $(qbed_CXXFLAGS) $(CXXFLAGS) -c -o qbed-bitcoind.o `test -f 'bitcoind.cpp' || echo '$(srcdir)/'`bitcoind.cpp
+
+qbed-bitcoind.obj: bitcoind.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbed_CPPFLAGS) $(CPPFLAGS) $(qbed_CXXFLAGS) $(CXXFLAGS) -MT qbed-bitcoind.obj -MD -MP -MF $(DEPDIR)/qbed-bitcoind.Tpo -c -o qbed-bitcoind.obj `if test -f 'bitcoind.cpp'; then $(CYGPATH_W) 'bitcoind.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoind.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qbed-bitcoind.Tpo $(DEPDIR)/qbed-bitcoind.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoind.cpp' object='qbed-bitcoind.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qbed_CPPFLAGS) $(CPPFLAGS) $(qbed_CXXFLAGS) $(CXXFLAGS) -c -o qbed-bitcoind.obj `if test -f 'bitcoind.cpp'; then $(CYGPATH_W) 'bitcoind.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoind.cpp'; fi`
+
+qt/qbe_qt-bitcoin.o: qt/bitcoin.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qbe_qt_CXXFLAGS) $(CXXFLAGS) -MT qt/qbe_qt-bitcoin.o -MD -MP -MF qt/$(DEPDIR)/qbe_qt-bitcoin.Tpo -c -o qt/qbe_qt-bitcoin.o `test -f 'qt/bitcoin.cpp' || echo '$(srcdir)/'`qt/bitcoin.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qbe_qt-bitcoin.Tpo qt/$(DEPDIR)/qbe_qt-bitcoin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='qt/bitcoin.cpp' object='qt/qbe_qt-bitcoin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qbe_qt_CXXFLAGS) $(CXXFLAGS) -c -o qt/qbe_qt-bitcoin.o `test -f 'qt/bitcoin.cpp' || echo '$(srcdir)/'`qt/bitcoin.cpp
+
+qt/qbe_qt-bitcoin.obj: qt/bitcoin.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qbe_qt_CXXFLAGS) $(CXXFLAGS) -MT qt/qbe_qt-bitcoin.obj -MD -MP -MF qt/$(DEPDIR)/qbe_qt-bitcoin.Tpo -c -o qt/qbe_qt-bitcoin.obj `if test -f 'qt/bitcoin.cpp'; then $(CYGPATH_W) 'qt/bitcoin.cpp'; else $(CYGPATH_W) '$(srcdir)/qt/bitcoin.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qbe_qt-bitcoin.Tpo qt/$(DEPDIR)/qbe_qt-bitcoin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='qt/bitcoin.cpp' object='qt/qbe_qt-bitcoin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(qt_qbe_qt_CXXFLAGS) $(CXXFLAGS) -c -o qt/qbe_qt-bitcoin.obj `if test -f 'qt/bitcoin.cpp'; then $(CYGPATH_W) 'qt/bitcoin.cpp'; else $(CYGPATH_W) '$(srcdir)/qt/bitcoin.cpp'; fi`
 
 qt/test/test_qtum_qt-compattests.o: qt/test/compattests.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_test_test_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(qt_test_test_qtum_qt_CXXFLAGS) $(CXXFLAGS) -MT qt/test/test_qtum_qt-compattests.o -MD -MP -MF qt/test/$(DEPDIR)/test_qtum_qt-compattests.Tpo -c -o qt/test/test_qtum_qt-compattests.o `test -f 'qt/test/compattests.cpp' || echo '$(srcdir)/'`qt/test/compattests.cpp
@@ -13460,62 +13515,6 @@ qt/test/test_qtum_qt-moc_wallettests.obj: qt/test/moc_wallettests.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='qt/test/moc_wallettests.cpp' object='qt/test/test_qtum_qt-moc_wallettests.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_test_test_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(qt_test_test_qtum_qt_CXXFLAGS) $(CXXFLAGS) -c -o qt/test/test_qtum_qt-moc_wallettests.obj `if test -f 'qt/test/moc_wallettests.cpp'; then $(CYGPATH_W) 'qt/test/moc_wallettests.cpp'; else $(CYGPATH_W) '$(srcdir)/qt/test/moc_wallettests.cpp'; fi`
-
-qtum_cli-bitcoin-cli.o: bitcoin-cli.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_cli_CPPFLAGS) $(CPPFLAGS) $(qtum_cli_CXXFLAGS) $(CXXFLAGS) -MT qtum_cli-bitcoin-cli.o -MD -MP -MF $(DEPDIR)/qtum_cli-bitcoin-cli.Tpo -c -o qtum_cli-bitcoin-cli.o `test -f 'bitcoin-cli.cpp' || echo '$(srcdir)/'`bitcoin-cli.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qtum_cli-bitcoin-cli.Tpo $(DEPDIR)/qtum_cli-bitcoin-cli.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-cli.cpp' object='qtum_cli-bitcoin-cli.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_cli_CPPFLAGS) $(CPPFLAGS) $(qtum_cli_CXXFLAGS) $(CXXFLAGS) -c -o qtum_cli-bitcoin-cli.o `test -f 'bitcoin-cli.cpp' || echo '$(srcdir)/'`bitcoin-cli.cpp
-
-qtum_cli-bitcoin-cli.obj: bitcoin-cli.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_cli_CPPFLAGS) $(CPPFLAGS) $(qtum_cli_CXXFLAGS) $(CXXFLAGS) -MT qtum_cli-bitcoin-cli.obj -MD -MP -MF $(DEPDIR)/qtum_cli-bitcoin-cli.Tpo -c -o qtum_cli-bitcoin-cli.obj `if test -f 'bitcoin-cli.cpp'; then $(CYGPATH_W) 'bitcoin-cli.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-cli.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qtum_cli-bitcoin-cli.Tpo $(DEPDIR)/qtum_cli-bitcoin-cli.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-cli.cpp' object='qtum_cli-bitcoin-cli.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_cli_CPPFLAGS) $(CPPFLAGS) $(qtum_cli_CXXFLAGS) $(CXXFLAGS) -c -o qtum_cli-bitcoin-cli.obj `if test -f 'bitcoin-cli.cpp'; then $(CYGPATH_W) 'bitcoin-cli.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-cli.cpp'; fi`
-
-qtum_tx-bitcoin-tx.o: bitcoin-tx.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -MT qtum_tx-bitcoin-tx.o -MD -MP -MF $(DEPDIR)/qtum_tx-bitcoin-tx.Tpo -c -o qtum_tx-bitcoin-tx.o `test -f 'bitcoin-tx.cpp' || echo '$(srcdir)/'`bitcoin-tx.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qtum_tx-bitcoin-tx.Tpo $(DEPDIR)/qtum_tx-bitcoin-tx.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-tx.cpp' object='qtum_tx-bitcoin-tx.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -c -o qtum_tx-bitcoin-tx.o `test -f 'bitcoin-tx.cpp' || echo '$(srcdir)/'`bitcoin-tx.cpp
-
-qtum_tx-bitcoin-tx.obj: bitcoin-tx.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -MT qtum_tx-bitcoin-tx.obj -MD -MP -MF $(DEPDIR)/qtum_tx-bitcoin-tx.Tpo -c -o qtum_tx-bitcoin-tx.obj `if test -f 'bitcoin-tx.cpp'; then $(CYGPATH_W) 'bitcoin-tx.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-tx.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qtum_tx-bitcoin-tx.Tpo $(DEPDIR)/qtum_tx-bitcoin-tx.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoin-tx.cpp' object='qtum_tx-bitcoin-tx.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -c -o qtum_tx-bitcoin-tx.obj `if test -f 'bitcoin-tx.cpp'; then $(CYGPATH_W) 'bitcoin-tx.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoin-tx.cpp'; fi`
-
-consensus/qtum_tx-consensus.o: consensus/consensus.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -MT consensus/qtum_tx-consensus.o -MD -MP -MF consensus/$(DEPDIR)/qtum_tx-consensus.Tpo -c -o consensus/qtum_tx-consensus.o `test -f 'consensus/consensus.cpp' || echo '$(srcdir)/'`consensus/consensus.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) consensus/$(DEPDIR)/qtum_tx-consensus.Tpo consensus/$(DEPDIR)/qtum_tx-consensus.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='consensus/consensus.cpp' object='consensus/qtum_tx-consensus.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -c -o consensus/qtum_tx-consensus.o `test -f 'consensus/consensus.cpp' || echo '$(srcdir)/'`consensus/consensus.cpp
-
-consensus/qtum_tx-consensus.obj: consensus/consensus.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -MT consensus/qtum_tx-consensus.obj -MD -MP -MF consensus/$(DEPDIR)/qtum_tx-consensus.Tpo -c -o consensus/qtum_tx-consensus.obj `if test -f 'consensus/consensus.cpp'; then $(CYGPATH_W) 'consensus/consensus.cpp'; else $(CYGPATH_W) '$(srcdir)/consensus/consensus.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) consensus/$(DEPDIR)/qtum_tx-consensus.Tpo consensus/$(DEPDIR)/qtum_tx-consensus.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='consensus/consensus.cpp' object='consensus/qtum_tx-consensus.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtum_tx_CPPFLAGS) $(CPPFLAGS) $(qtum_tx_CXXFLAGS) $(CXXFLAGS) -c -o consensus/qtum_tx-consensus.obj `if test -f 'consensus/consensus.cpp'; then $(CYGPATH_W) 'consensus/consensus.cpp'; else $(CYGPATH_W) '$(srcdir)/consensus/consensus.cpp'; fi`
-
-qtumd-bitcoind.o: bitcoind.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtumd_CPPFLAGS) $(CPPFLAGS) $(qtumd_CXXFLAGS) $(CXXFLAGS) -MT qtumd-bitcoind.o -MD -MP -MF $(DEPDIR)/qtumd-bitcoind.Tpo -c -o qtumd-bitcoind.o `test -f 'bitcoind.cpp' || echo '$(srcdir)/'`bitcoind.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qtumd-bitcoind.Tpo $(DEPDIR)/qtumd-bitcoind.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoind.cpp' object='qtumd-bitcoind.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtumd_CPPFLAGS) $(CPPFLAGS) $(qtumd_CXXFLAGS) $(CXXFLAGS) -c -o qtumd-bitcoind.o `test -f 'bitcoind.cpp' || echo '$(srcdir)/'`bitcoind.cpp
-
-qtumd-bitcoind.obj: bitcoind.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtumd_CPPFLAGS) $(CPPFLAGS) $(qtumd_CXXFLAGS) $(CXXFLAGS) -MT qtumd-bitcoind.obj -MD -MP -MF $(DEPDIR)/qtumd-bitcoind.Tpo -c -o qtumd-bitcoind.obj `if test -f 'bitcoind.cpp'; then $(CYGPATH_W) 'bitcoind.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoind.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qtumd-bitcoind.Tpo $(DEPDIR)/qtumd-bitcoind.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bitcoind.cpp' object='qtumd-bitcoind.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qtumd_CPPFLAGS) $(CPPFLAGS) $(qtumd_CXXFLAGS) $(CXXFLAGS) -c -o qtumd-bitcoind.obj `if test -f 'bitcoind.cpp'; then $(CYGPATH_W) 'bitcoind.cpp'; else $(CYGPATH_W) '$(srcdir)/bitcoind.cpp'; fi`
 
 test/test_qtum-arith_uint256_tests.o: test/arith_uint256_tests.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_qtum_CPPFLAGS) $(CPPFLAGS) $(test_test_qtum_CXXFLAGS) $(CXXFLAGS) -MT test/test_qtum-arith_uint256_tests.o -MD -MP -MF test/$(DEPDIR)/test_qtum-arith_uint256_tests.Tpo -c -o test/test_qtum-arith_uint256_tests.o `test -f 'test/arith_uint256_tests.cpp' || echo '$(srcdir)/'`test/arith_uint256_tests.cpp
@@ -14509,33 +14508,33 @@ test/test_qtum_fuzzy-test_bitcoin_fuzzy.obj: test/test_bitcoin_fuzzy.cpp
 @AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	DEPDIR=$(DEPDIR) $(OBJCXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(LTOBJCXXCOMPILE) -c -o $@ $<
 
-qt/qtum_qt-macdockiconhandler.o: qt/macdockiconhandler.mm
-@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qtum_qt-macdockiconhandler.o -MD -MP -MF qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Tpo -c -o qt/qtum_qt-macdockiconhandler.o `test -f 'qt/macdockiconhandler.mm' || echo '$(srcdir)/'`qt/macdockiconhandler.mm
-@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Tpo qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Po
-@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macdockiconhandler.mm' object='qt/qtum_qt-macdockiconhandler.o' libtool=no @AMDEPBACKSLASH@
+qt/qbe_qt-macdockiconhandler.o: qt/macdockiconhandler.mm
+@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qbe_qt-macdockiconhandler.o -MD -MP -MF qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Tpo -c -o qt/qbe_qt-macdockiconhandler.o `test -f 'qt/macdockiconhandler.mm' || echo '$(srcdir)/'`qt/macdockiconhandler.mm
+@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Tpo qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Po
+@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macdockiconhandler.mm' object='qt/qbe_qt-macdockiconhandler.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	DEPDIR=$(DEPDIR) $(OBJCXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qtum_qt-macdockiconhandler.o `test -f 'qt/macdockiconhandler.mm' || echo '$(srcdir)/'`qt/macdockiconhandler.mm
+@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qbe_qt-macdockiconhandler.o `test -f 'qt/macdockiconhandler.mm' || echo '$(srcdir)/'`qt/macdockiconhandler.mm
 
-qt/qtum_qt-macdockiconhandler.obj: qt/macdockiconhandler.mm
-@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qtum_qt-macdockiconhandler.obj -MD -MP -MF qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Tpo -c -o qt/qtum_qt-macdockiconhandler.obj `if test -f 'qt/macdockiconhandler.mm'; then $(CYGPATH_W) 'qt/macdockiconhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macdockiconhandler.mm'; fi`
-@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Tpo qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Po
-@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macdockiconhandler.mm' object='qt/qtum_qt-macdockiconhandler.obj' libtool=no @AMDEPBACKSLASH@
+qt/qbe_qt-macdockiconhandler.obj: qt/macdockiconhandler.mm
+@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qbe_qt-macdockiconhandler.obj -MD -MP -MF qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Tpo -c -o qt/qbe_qt-macdockiconhandler.obj `if test -f 'qt/macdockiconhandler.mm'; then $(CYGPATH_W) 'qt/macdockiconhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macdockiconhandler.mm'; fi`
+@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Tpo qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Po
+@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macdockiconhandler.mm' object='qt/qbe_qt-macdockiconhandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	DEPDIR=$(DEPDIR) $(OBJCXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qtum_qt-macdockiconhandler.obj `if test -f 'qt/macdockiconhandler.mm'; then $(CYGPATH_W) 'qt/macdockiconhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macdockiconhandler.mm'; fi`
+@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qbe_qt-macdockiconhandler.obj `if test -f 'qt/macdockiconhandler.mm'; then $(CYGPATH_W) 'qt/macdockiconhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macdockiconhandler.mm'; fi`
 
-qt/qtum_qt-macnotificationhandler.o: qt/macnotificationhandler.mm
-@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qtum_qt-macnotificationhandler.o -MD -MP -MF qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Tpo -c -o qt/qtum_qt-macnotificationhandler.o `test -f 'qt/macnotificationhandler.mm' || echo '$(srcdir)/'`qt/macnotificationhandler.mm
-@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Tpo qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Po
-@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macnotificationhandler.mm' object='qt/qtum_qt-macnotificationhandler.o' libtool=no @AMDEPBACKSLASH@
+qt/qbe_qt-macnotificationhandler.o: qt/macnotificationhandler.mm
+@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qbe_qt-macnotificationhandler.o -MD -MP -MF qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Tpo -c -o qt/qbe_qt-macnotificationhandler.o `test -f 'qt/macnotificationhandler.mm' || echo '$(srcdir)/'`qt/macnotificationhandler.mm
+@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Tpo qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Po
+@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macnotificationhandler.mm' object='qt/qbe_qt-macnotificationhandler.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	DEPDIR=$(DEPDIR) $(OBJCXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qtum_qt-macnotificationhandler.o `test -f 'qt/macnotificationhandler.mm' || echo '$(srcdir)/'`qt/macnotificationhandler.mm
+@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qbe_qt-macnotificationhandler.o `test -f 'qt/macnotificationhandler.mm' || echo '$(srcdir)/'`qt/macnotificationhandler.mm
 
-qt/qtum_qt-macnotificationhandler.obj: qt/macnotificationhandler.mm
-@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qtum_qt-macnotificationhandler.obj -MD -MP -MF qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Tpo -c -o qt/qtum_qt-macnotificationhandler.obj `if test -f 'qt/macnotificationhandler.mm'; then $(CYGPATH_W) 'qt/macnotificationhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macnotificationhandler.mm'; fi`
-@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Tpo qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Po
-@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macnotificationhandler.mm' object='qt/qtum_qt-macnotificationhandler.obj' libtool=no @AMDEPBACKSLASH@
+qt/qbe_qt-macnotificationhandler.obj: qt/macnotificationhandler.mm
+@am__fastdepOBJCXX_TRUE@	$(AM_V_OBJCXX)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -MT qt/qbe_qt-macnotificationhandler.obj -MD -MP -MF qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Tpo -c -o qt/qbe_qt-macnotificationhandler.obj `if test -f 'qt/macnotificationhandler.mm'; then $(CYGPATH_W) 'qt/macnotificationhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macnotificationhandler.mm'; fi`
+@am__fastdepOBJCXX_TRUE@	$(AM_V_at)$(am__mv) qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Tpo qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Po
+@AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX)source='qt/macnotificationhandler.mm' object='qt/qbe_qt-macnotificationhandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepOBJCXX_FALSE@	DEPDIR=$(DEPDIR) $(OBJCXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qtum_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qtum_qt-macnotificationhandler.obj `if test -f 'qt/macnotificationhandler.mm'; then $(CYGPATH_W) 'qt/macnotificationhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macnotificationhandler.mm'; fi`
+@am__fastdepOBJCXX_FALSE@	$(AM_V_OBJCXX@am__nodep@)$(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(qt_qbe_qt_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) -c -o qt/qbe_qt-macnotificationhandler.obj `if test -f 'qt/macnotificationhandler.mm'; then $(CYGPATH_W) 'qt/macnotificationhandler.mm'; else $(CYGPATH_W) '$(srcdir)/qt/macnotificationhandler.mm'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -15084,9 +15083,9 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/libbitcoinconsensus_la-pubkey.Plo
 	-rm -f ./$(DEPDIR)/libbitcoinconsensus_la-uint256.Plo
 	-rm -f ./$(DEPDIR)/libbitcoinconsensus_la-utilstrencodings.Plo
-	-rm -f ./$(DEPDIR)/qtum_cli-bitcoin-cli.Po
-	-rm -f ./$(DEPDIR)/qtum_tx-bitcoin-tx.Po
-	-rm -f ./$(DEPDIR)/qtumd-bitcoind.Po
+	-rm -f ./$(DEPDIR)/qbe_cli-bitcoin-cli.Po
+	-rm -f ./$(DEPDIR)/qbe_tx-bitcoin-tx.Po
+	-rm -f ./$(DEPDIR)/qbed-bitcoind.Po
 	-rm -f bench/$(DEPDIR)/bench_qtum-Examples.Po
 	-rm -f bench/$(DEPDIR)/bench_qtum-base58.Po
 	-rm -f bench/$(DEPDIR)/bench_qtum-bench.Po
@@ -15111,7 +15110,7 @@ distclean: distclean-recursive
 	-rm -f consensus/$(DEPDIR)/libbitcoin_server_a-consensus.Po
 	-rm -f consensus/$(DEPDIR)/libbitcoin_server_a-tx_verify.Po
 	-rm -f consensus/$(DEPDIR)/libbitcoinconsensus_la-merkle.Plo
-	-rm -f consensus/$(DEPDIR)/qtum_tx-consensus.Po
+	-rm -f consensus/$(DEPDIR)/qbe_tx-consensus.Po
 	-rm -f cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Base64.Po
 	-rm -f cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Common.Po
 	-rm -f cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-CommonData.Po
@@ -15477,9 +15476,9 @@ distclean: distclean-recursive
 	-rm -f qt/$(DEPDIR)/libbitcoinqt_a-walletmodeltransaction.Po
 	-rm -f qt/$(DEPDIR)/libbitcoinqt_a-walletview.Po
 	-rm -f qt/$(DEPDIR)/libbitcoinqt_a-winshutdownmonitor.Po
-	-rm -f qt/$(DEPDIR)/qtum_qt-bitcoin.Po
-	-rm -f qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Po
-	-rm -f qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Po
+	-rm -f qt/$(DEPDIR)/qbe_qt-bitcoin.Po
+	-rm -f qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Po
+	-rm -f qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Po
 	-rm -f qt/test/$(DEPDIR)/test_qtum_qt-compattests.Po
 	-rm -f qt/test/$(DEPDIR)/test_qtum_qt-moc_compattests.Po
 	-rm -f qt/test/$(DEPDIR)/test_qtum_qt-moc_paymentservertests.Po
@@ -15703,9 +15702,9 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/libbitcoinconsensus_la-pubkey.Plo
 	-rm -f ./$(DEPDIR)/libbitcoinconsensus_la-uint256.Plo
 	-rm -f ./$(DEPDIR)/libbitcoinconsensus_la-utilstrencodings.Plo
-	-rm -f ./$(DEPDIR)/qtum_cli-bitcoin-cli.Po
-	-rm -f ./$(DEPDIR)/qtum_tx-bitcoin-tx.Po
-	-rm -f ./$(DEPDIR)/qtumd-bitcoind.Po
+	-rm -f ./$(DEPDIR)/qbe_cli-bitcoin-cli.Po
+	-rm -f ./$(DEPDIR)/qbe_tx-bitcoin-tx.Po
+	-rm -f ./$(DEPDIR)/qbed-bitcoind.Po
 	-rm -f bench/$(DEPDIR)/bench_qtum-Examples.Po
 	-rm -f bench/$(DEPDIR)/bench_qtum-base58.Po
 	-rm -f bench/$(DEPDIR)/bench_qtum-bench.Po
@@ -15730,7 +15729,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f consensus/$(DEPDIR)/libbitcoin_server_a-consensus.Po
 	-rm -f consensus/$(DEPDIR)/libbitcoin_server_a-tx_verify.Po
 	-rm -f consensus/$(DEPDIR)/libbitcoinconsensus_la-merkle.Plo
-	-rm -f consensus/$(DEPDIR)/qtum_tx-consensus.Po
+	-rm -f consensus/$(DEPDIR)/qbe_tx-consensus.Po
 	-rm -f cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Base64.Po
 	-rm -f cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-Common.Po
 	-rm -f cpp-ethereum/libdevcore/$(DEPDIR)/libbitcoin_common_a-CommonData.Po
@@ -16096,9 +16095,9 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f qt/$(DEPDIR)/libbitcoinqt_a-walletmodeltransaction.Po
 	-rm -f qt/$(DEPDIR)/libbitcoinqt_a-walletview.Po
 	-rm -f qt/$(DEPDIR)/libbitcoinqt_a-winshutdownmonitor.Po
-	-rm -f qt/$(DEPDIR)/qtum_qt-bitcoin.Po
-	-rm -f qt/$(DEPDIR)/qtum_qt-macdockiconhandler.Po
-	-rm -f qt/$(DEPDIR)/qtum_qt-macnotificationhandler.Po
+	-rm -f qt/$(DEPDIR)/qbe_qt-bitcoin.Po
+	-rm -f qt/$(DEPDIR)/qbe_qt-macdockiconhandler.Po
+	-rm -f qt/$(DEPDIR)/qbe_qt-macnotificationhandler.Po
 	-rm -f qt/test/$(DEPDIR)/test_qtum_qt-compattests.Po
 	-rm -f qt/test/$(DEPDIR)/test_qtum_qt-moc_compattests.Po
 	-rm -f qt/test/$(DEPDIR)/test_qtum_qt-moc_paymentservertests.Po
@@ -16386,7 +16385,7 @@ check-security: $(bin_PROGRAMS)
 @ENABLE_QT_TRUE@	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
 
 @ENABLE_QT_TRUE@bitcoin_qt_clean: FORCE
-@ENABLE_QT_TRUE@	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_qtum_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
+@ENABLE_QT_TRUE@	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_qbe_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
 
 @ENABLE_QT_TRUE@bitcoin_qt : qt/bitcoin-qt$(EXEEXT)
 

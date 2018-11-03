@@ -460,7 +460,7 @@ public:
         OverviewPage->setWindowTitle(QApplication::translate("OverviewPage", "Form", nullptr));
         labelTokens->setText(QApplication::translate("OverviewPage", "Other Tokens", nullptr));
 #ifndef QT_NO_TOOLTIP
-        labelTokenStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the Qtum network after a connection is established, but this process has not completed yet.", nullptr));
+        labelTokenStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the Qbe network after a connection is established, but this process has not completed yet.", nullptr));
 #endif // QT_NO_TOOLTIP
         labelTokenStatus->setText(QString());
         buttonAddToken->setText(QApplication::translate("OverviewPage", "Add", nullptr));
@@ -504,7 +504,7 @@ public:
         labelWalletStatus->setText(QString());
         labelRecentTransactions->setText(QApplication::translate("OverviewPage", "RecentTransactions", nullptr));
 #ifndef QT_NO_TOOLTIP
-        labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the Qtum network after a connection is established, but this process has not completed yet.", nullptr));
+        labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the Qbe network after a connection is established, but this process has not completed yet.", nullptr));
 #endif // QT_NO_TOOLTIP
         labelTransactionsStatus->setText(QString());
         labelDate->setText(QApplication::translate("OverviewPage", "Date", nullptr));

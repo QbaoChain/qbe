@@ -75,10 +75,10 @@ am__make_running_with_option = \
   test $$has_opt = yes
 am__make_dryrun = (target_option=n; $(am__make_running_with_option))
 am__make_keepgoing = (target_option=k; $(am__make_running_with_option))
-pkgdatadir = $(datadir)/qtum
-pkgincludedir = $(includedir)/qtum
-pkglibdir = $(libdir)/qtum
-pkglibexecdir = $(libexecdir)/qtum
+pkgdatadir = $(datadir)/qbe
+pkgincludedir = $(includedir)/qbe
+pkglibdir = $(libdir)/qbe
+pkglibexecdir = $(libexecdir)/qbe
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -280,22 +280,22 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8/build-aux/missing aclocal-1.16
+ACLOCAL = ${SHELL} /Users/wangkai/gitlab/perfect/build-aux/missing aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = /usr/bin/ar
 ARFLAGS = cr
-AUTOCONF = ${SHELL} /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8/build-aux/missing autoconf
-AUTOHEADER = ${SHELL} /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8/build-aux/missing autoheader
-AUTOMAKE = ${SHELL} /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8/build-aux/missing automake-1.16
+AUTOCONF = ${SHELL} /Users/wangkai/gitlab/perfect/build-aux/missing autoconf
+AUTOHEADER = ${SHELL} /Users/wangkai/gitlab/perfect/build-aux/missing autoheader
+AUTOMAKE = ${SHELL} /Users/wangkai/gitlab/perfect/build-aux/missing automake-1.16
 AWK = awk
 BDB_CFLAGS = 
 BDB_CPPFLAGS = 
 BDB_LIBS = -ldb_cxx-4.8
-BITCOIN_CLI_NAME = qtum-cli
-BITCOIN_DAEMON_NAME = qtumd
-BITCOIN_GUI_NAME = qtum-qt
-BITCOIN_TX_NAME = qtum-tx
+BITCOIN_CLI_NAME = qbe-cli
+BITCOIN_DAEMON_NAME = qbed
+BITCOIN_GUI_NAME = qbe-qt
+BITCOIN_TX_NAME = qbe-tx
 BOOST_CHRONO_LIB = -lboost_chrono-mt
 BOOST_CPPFLAGS = -DBOOST_SP_USE_STD_ATOMIC -DBOOST_AC_USE_STD_ATOMIC -pthread -I/usr/local/include
 BOOST_FILESYSTEM_LIB = -lboost_filesystem
@@ -317,16 +317,16 @@ CLIENT_VERSION_MAJOR = 0
 CLIENT_VERSION_MINOR = 15
 CLIENT_VERSION_REVISION = 8
 COPYRIGHT_HOLDERS = The %s developers
-COPYRIGHT_HOLDERS_FINAL = The Qtum Core developers
-COPYRIGHT_HOLDERS_SUBSTITUTION = Qtum Core
+COPYRIGHT_HOLDERS_FINAL = The Qbe Core developers
+COPYRIGHT_HOLDERS_SUBSTITUTION = Qbe Core
 COPYRIGHT_YEAR = 2018
 CPP = gcc -E
 CPPFILT = /usr/bin/c++filt
 CPPFLAGS =  -DQTUM_BUILD -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS -I/usr/local/opt/berkeley-db@4/include -DMAC_OSX
 CRYPTOPP_CPPFLAGS = 
 CRYPTOPP_TARGET_FLAGS = 
-CRYPTO_CFLAGS = -I/usr/local/Cellar/openssl/1.0.2o_1/include
-CRYPTO_LIBS = -L/usr/local/Cellar/openssl/1.0.2o_1/lib -lcrypto
+CRYPTO_CFLAGS = -I/usr/local/Cellar/openssl/1.0.2p/include
+CRYPTO_LIBS = -L/usr/local/Cellar/openssl/1.0.2p/lib -lcrypto
 CXX = g++ -std=c++11
 CXXCPP = g++ -std=c++11 -E
 CXXDEPMODE = depmode=gcc3
@@ -352,7 +352,7 @@ FGREP = /usr/bin/grep -F
 GCOV = /usr/bin/gcov
 GENHTML = 
 GENISOIMAGE = 
-GIT = /usr/bin/git
+GIT = /usr/local/bin/git
 GREP = /usr/bin/grep
 HARDENED_CPPFLAGS =  -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
 HARDENED_CXXFLAGS =  -Wstack-protector -fstack-protector-all
@@ -386,7 +386,7 @@ LTLIBOBJS =
 LT_SYS_LIBRARY_PATH = 
 LUPDATE = /usr/local/Cellar/qt/5.10.1/bin/lupdate
 MAINT = 
-MAKEINFO = ${SHELL} /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8/build-aux/missing makeinfo
+MAKEINFO = ${SHELL} /Users/wangkai/gitlab/perfect/build-aux/missing makeinfo
 MAKENSIS = 
 MANIFEST_TOOL = :
 MINIUPNPC_CPPFLAGS = 
@@ -404,11 +404,11 @@ OBJDUMP = objdump
 OBJEXT = o
 OTOOL = otool
 OTOOL64 = :
-PACKAGE = qtum
+PACKAGE = qbe
 PACKAGE_BUGREPORT = https://github.com/qtumproject/qtum/issues
-PACKAGE_NAME = Qtum Core
-PACKAGE_STRING = Qtum Core 0.15.8
-PACKAGE_TARNAME = qtum
+PACKAGE_NAME = Qbe Core
+PACKAGE_STRING = Qbe Core 0.15.8
+PACKAGE_TARNAME = qbe
 PACKAGE_URL = https://qtum.org/
 PACKAGE_VERSION = 0.15.8
 PATH_SEPARATOR = :
@@ -459,8 +459,8 @@ SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 SSE42_CXXFLAGS = -msse4.2
-SSL_CFLAGS = -I/usr/local/Cellar/openssl/1.0.2o_1/include
-SSL_LIBS = -L/usr/local/Cellar/openssl/1.0.2o_1/lib -lssl
+SSL_CFLAGS = -I/usr/local/Cellar/openssl/1.0.2p/include
+SSL_LIBS = -L/usr/local/Cellar/openssl/1.0.2p/lib -lssl
 STRIP = /usr/bin/strip
 TESTDEFS =  -DBOOST_TEST_DYN_LINK
 TIFFCP = 
@@ -475,12 +475,12 @@ WINDRES =
 X11XCB_CFLAGS = 
 X11XCB_LIBS = 
 XGETTEXT = 
-ZMQ_CFLAGS = 
-ZMQ_LIBS = 
-abs_builddir = /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8
-abs_srcdir = /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8
-abs_top_builddir = /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8
-abs_top_srcdir = /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8
+ZMQ_CFLAGS = -I/usr/local/Cellar/zeromq/4.2.5/include
+ZMQ_LIBS = -L/usr/local/Cellar/zeromq/4.2.5/lib -lzmq
+abs_builddir = /Users/wangkai/gitlab/perfect
+abs_srcdir = /Users/wangkai/gitlab/perfect
+abs_top_builddir = /Users/wangkai/gitlab/perfect
+abs_top_srcdir = /Users/wangkai/gitlab/perfect
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -512,7 +512,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/wangkai/qtum-enterprise-qtumx_beta_0.15.8/build-aux/install-sh
+install_sh = ${SHELL} /Users/wangkai/gitlab/perfect/build-aux/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -544,7 +544,7 @@ BITCOIN_CLI_BIN = $(top_builddir)/src/$(BITCOIN_CLI_NAME)$(EXEEXT)
 BITCOIN_WIN_INSTALLER = $(PACKAGE)-$(PACKAGE_VERSION)-win$(WINDOWS_BITS)-setup$(EXEEXT)
 empty := 
 space := $(empty) $(empty)
-OSX_APP = Qtum-Qt.app
+OSX_APP = Qbe-Qt.app
 OSX_VOLNAME = $(subst $(space),-,$(PACKAGE_NAME))
 OSX_DMG = $(OSX_VOLNAME).dmg
 OSX_BACKGROUND_SVG = background.svg
@@ -588,7 +588,7 @@ COVERAGE_INFO = baseline.info \
 
 OSX_APP_BUILT = $(OSX_APP)/Contents/PkgInfo $(OSX_APP)/Contents/Resources/empty.lproj \
   $(OSX_APP)/Contents/Resources/bitcoin.icns $(OSX_APP)/Contents/Info.plist \
-  $(OSX_APP)/Contents/MacOS/Qtum-Qt $(OSX_APP)/Contents/Resources/Base.lproj/InfoPlist.strings
+  $(OSX_APP)/Contents/MacOS/Qbe-Qt $(OSX_APP)/Contents/Resources/Base.lproj/InfoPlist.strings
 
 #APP_DIST_DIR = $(top_builddir)/dist
 #APP_DIST_EXTRAS = $(APP_DIST_DIR)/.background/$(OSX_BACKGROUND_IMAGE) $(APP_DIST_DIR)/.DS_Store $(APP_DIST_DIR)/Applications
@@ -1202,7 +1202,7 @@ $(OSX_APP)/Contents/Resources/bitcoin.icns: $(OSX_INSTALLER_ICONS)
 	$(MKDIR_P) $(@D)
 	$(INSTALL_DATA) $< $@
 
-$(OSX_APP)/Contents/MacOS/Qtum-Qt: $(BITCOIN_QT_BIN)
+$(OSX_APP)/Contents/MacOS/Qbe-Qt: $(BITCOIN_QT_BIN)
 	$(MKDIR_P) $(@D)
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM)  $< $@
 
@@ -1229,7 +1229,7 @@ deploydir: $(OSX_DMG)
 #	@rm -f $@
 #	@cd $(@D); $(LN_S) /Applications $(@F)
 
-#$(APP_DIST_EXTRAS): $(APP_DIST_DIR)/$(OSX_APP)/Contents/MacOS/Qtum-Qt
+#$(APP_DIST_EXTRAS): $(APP_DIST_DIR)/$(OSX_APP)/Contents/MacOS/Qbe-Qt
 
 #$(OSX_DMG): $(APP_DIST_EXTRAS)
 #	$(GENISOIMAGE) -no-cache-inodes -D -l -probe -V "$(OSX_VOLNAME)" -no-pad -r -dir-mode 0755 -apple -o $@ dist
@@ -1243,7 +1243,7 @@ deploydir: $(OSX_DMG)
 #$(APP_DIST_DIR)/.DS_Store: $(OSX_DSSTORE_GEN)
 #	$(PYTHON) $< "$@" "$(OSX_VOLNAME)"
 
-#$(APP_DIST_DIR)/$(OSX_APP)/Contents/MacOS/Qtum-Qt: $(OSX_APP_BUILT) $(OSX_PACKAGING)
+#$(APP_DIST_DIR)/$(OSX_APP)/Contents/MacOS/Qbe-Qt: $(OSX_APP_BUILT) $(OSX_PACKAGING)
 #	INSTALLNAMETOOL=$(INSTALLNAMETOOL)  OTOOL=$(OTOOL) STRIP=$(STRIP) $(PYTHON) $(OSX_DEPLOY_SCRIPT) $(OSX_APP) -translations-dir=$(QT_TRANSLATION_DIR) -add-qt-tr $(OSX_QT_TRANSLATIONS) -verbose 2
 
 #deploydir: $(APP_DIST_EXTRAS)

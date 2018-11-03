@@ -27,10 +27,10 @@
 #define COPYRIGHT_HOLDERS "The %s developers"
 
 /* Copyright holder(s) */
-#define COPYRIGHT_HOLDERS_FINAL "The Qtum Core developers"
+#define COPYRIGHT_HOLDERS_FINAL "The Qbe Core developers"
 
 /* Replacement for %s in copyright holders string */
-#define COPYRIGHT_HOLDERS_SUBSTITUTION "Qtum Core"
+#define COPYRIGHT_HOLDERS_SUBSTITUTION "Qbe Core"
 
 /* Copyright year */
 #define COPYRIGHT_YEAR 2018
@@ -39,7 +39,7 @@
 #define ENABLE_WALLET 1
 
 /* Define to 1 to enable ZMQ functions */
-#define ENABLE_ZMQ 0
+#define ENABLE_ZMQ 1
 
 /* Define this symbol to build in experimental assembly routines */
 /* #undef EXPERIMENTAL_ASM */
@@ -353,13 +353,13 @@
 #define PACKAGE_BUGREPORT "https://github.com/qtumproject/qtum/issues"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "Qtum Core"
+#define PACKAGE_NAME "Qbe Core"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Qtum Core 0.15.8"
+#define PACKAGE_STRING "Qbe Core 0.15.8"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "qtum"
+#define PACKAGE_TARNAME "qbe"
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL "https://qtum.org/"

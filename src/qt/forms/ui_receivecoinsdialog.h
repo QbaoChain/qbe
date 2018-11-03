@@ -324,13 +324,13 @@ public:
 #endif // QT_NO_TOOLTIP
         label_2->setText(QApplication::translate("ReceiveCoinsDialog", "&Label:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        label_3->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Qtum network.", nullptr));
+        label_3->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Qbe network.", nullptr));
 #endif // QT_NO_TOOLTIP
         label_3->setText(QApplication::translate("ReceiveCoinsDialog", "&Message:", nullptr));
         copyAddressButton->setText(QString());
         refreshButton->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        reqMessage->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Qtum network.", nullptr));
+        reqMessage->setToolTip(QApplication::translate("ReceiveCoinsDialog", "An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Qbe network.", nullptr));
 #endif // QT_NO_TOOLTIP
         label_5->setText(QApplication::translate("ReceiveCoinsDialog", "Use this form to request payments. All fields are <b>optional</b>.", nullptr));
 #ifndef QT_NO_TOOLTIP
