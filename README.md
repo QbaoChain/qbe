@@ -28,14 +28,14 @@ BTC/ETH kind of wallet must with the help of a centralized server, often stolen 
 *
 
 
-What is Qtc Core?
+What is Qbe Core?
 ------------------------------------
 
-Qtc Core is our primary mainnet wallet. It implements a full node and is capable of storing, validating, and distributing all history of the Qbao network. Qtc Core is considered the reference implementation for the Qtum network. 
+Qbe Core is our primary mainnet wallet. It implements a full node and is capable of storing, validating, and distributing all history of the Qbao network. Qbe Core is considered the reference implementation for the Qtum network. 
 
-Qtc Core currently implements the following:
+Qbe Core currently implements the following:
 
-* Sending/Receiving Qtc
+* Sending/Receiving Qbe
 * Sending/Receiving QRC20 tokens on the Qbao network
 * Staking and creating blocks for the Qbao network
 * Creating and interacting with smart contracts
@@ -44,29 +44,12 @@ Qtc Core currently implements the following:
 * Regtest mode, which enables developers to very quickly build their own private Qbao network for Dapp testing
 * Compatibility with the Bitcoin Core set of RPC commands and APIs
 
-*
 
-Alternative Wallets
---------------------------------------
-
-Qtc Core uses a full node model, and thus requires downloading the entire blockchain. If you do not need the entire blockchain, and do not intend on developing smart contracts, it may be more ideal to use an alternative wallet such as one of our light wallets that can be synchronized in a matter of seconds. 
-
-
-These wallets run on mobile devices and synchronize quickly.   
-Android Download:   
-https://play.google.com/store/apps/details?id=org.qtc.wallet
-
-iOS Download:   
-https://github.com/qtcproject/qtc-ios (open source, we are still working with Apple to get approval for their app store)
-
-*
-
-
-Building Qtc Core
+Building Qbe Core
 ---------------------------------------
 
 ### (1)Build on Ubuntu
-This is a quick start script for compiling Qtc on  Ubuntu.
+This is a quick start script for compiling Qbe on  Ubuntu.
   
 ####1.Install protobuf(The version of apt-get is too low)
 
@@ -78,7 +61,7 @@ This is a quick start script for compiling Qtc on  Ubuntu.
 	make -j8 && make install 
 	ldconfig
 
-#####2.Installing Dependencies for Qtc
+#####2.Installing Dependencies for Qbe
 
     apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils git cmake libboost-all-dev
     apt-get install software-properties-common
@@ -89,16 +72,16 @@ This is a quick start script for compiling Qtc on  Ubuntu.
 ###### If you want to build the Qt GUI:
 	apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qrencode
 
-###### Compile Qtc
-	git clone --recursive http://43.254.148.146:83/QbaoChain/perfect.git
-	cd qtc
+###### Compile Qbe
+	git clone --recursive https://github.com/QbaoChain/qbe.git
+	cd qbe
 	./autogen.sh
 	./configure 
     
 
 ### (2)Build on CentOS
 
-Here is a brief description for compiling Qtc on CentOS
+Here is a brief description for compiling Qbe on CentOS
 
 ##### Compiling boost manually
     sudo yum install python-devel bzip2-devel
@@ -110,16 +93,16 @@ Here is a brief description for compiling Qtc on CentOS
     ./b2 headers
     sudo ./b2 -j4 install
     
-##### Installing Dependencies for Qtc
+##### Installing Dependencies for Qbe
     sudo yum install epel-release
     sudo yum install libtool libdb4-cxx-devel openssl-devel libevent-devel
     
     # If you want to build the Qt GUI:
     sudo yum install qt5-qttools-devel protobuf-devel qrencode-devel
     
-    # Building Qtc
-    git clone --recursive http://43.254.148.146:83/QbaoChain/perfect.git
-    cd qtc
+    # Building Qbe
+    git clone --recursive https://github.com/QbaoChain/qbe.git
+    cd qbe
     ./autogen.sh
     ./configure
     make -j4
@@ -164,16 +147,16 @@ NOTE: Building with Qt4 is still supported, however, could result in a broken UI
 
 NOTE: the support boost version must be 1.66 or less 1.60
 
-##### 4) Build Qtc Core
+##### 4) Build Qbe Core
 
-######1. Clone the qtc source code and cd into `qtc`
+######1. Clone the qbe source code and cd into `qbe`
 
-        git clone --recursive http://43.254.148.146:83/QbaoChain/perfect.git
-        cd qtc
+        git clone --recursive https://github.com/QbaoChain/qbe.git
+        cd qbe
 
-######2.  Build qtc-core:
+######2.  Build qbe-core:
 
-    Configure and build the headless qtc binaries as well as the GUI (if Qt is found).
+    Configure and build the headless qbe binaries as well as the GUI (if Qt is found).
 
     You can disable the GUI build by passing `--without-gui` to configure.
 
@@ -186,15 +169,15 @@ NOTE: the support boost version must be 1.66 or less 1.60
         make check
         
 #### 5) Initialization Parameter Configuration
-######1. mkdir qtc folder and touch qtc.conf
+######1. mkdir qbe folder and touch qbe.conf
 		
-		mkdir /Users/$UserName/Library/Application\ Support/Qtc
-		cd /Users/$UseName/Library/Application\ Support/Qtc
-		touch qtc.conf
+		mkdir /Users/$UserName/Library/Application\ Support/Qbe
+		cd /Users/$UseName/Library/Application\ Support/Qbe
+		touch qbe.conf
 	
 Note: replace $UserName to your computer name
 
-######2. echo cofiguration parmeter to qtc.conf, The list of configuration parameters is as follows:
+######2. echo cofiguration parmeter to qbe.conf, The list of configuration parameters is as follows:
 	
 	addressindex=1
 	timestampindex=1
@@ -208,25 +191,24 @@ Note: replace $UserName to your computer name
 	zmqpubhashblock=tcp://0.0.0.0:4000
 	#daemon=1
 	logevents=1
-	chain=cup
+	chain=qbe
 	server=1
 	addnode=47.100.27.65
-	addnode=172.16.3.60
 	#debug=zmq
 	maxmempool=100000
 
 
-######3. mkdir chain_cup and add configuration file
+######3. mkdir chain_qbe and add configuration file
 		
-		mkdir chain_cup
-		cd chain_cup
-		touch qtc.conf
+		mkdir chain_qbe
+		cd chain_qbe
+		touch qbe.conf
 		
-######4. echo cofiguration parmeter to qtc.conf, The list of configuration parameters is as follows:
+######4. echo cofiguration parmeter to qbe.conf, The list of configuration parameters is as follows:
 
 	poa=1
-	token-name=CUP
-	genesis-input=world cup
+	token-name=QBE
+	genesis-input=qbao chain
 	msgstart=1234aabb
 	poa-miner-list=QWXrSap9kvsoPmq9YrXp87NQQn4utwVqTk,QgZLtFbLAdRLcmEHtf6jscv9ZVCuHHtDEF,QS7AgqJNkiVhiEyNw9CTLE1dTWwdkAown2
 	poa-interval=5
@@ -241,28 +223,28 @@ Note: replace $UserName to your computer name
 Run
 ---------------------------------------
 ####(1) command-line
-Then you can enter the project path, for example,cd ~/qtc.
+Then you can enter the project path, for example,cd ~/qbe.
 	
 	# enter your project path
-	cd ~/qtc/src
+	cd ~/qbe/src
 	# 
-	./qtcd -daemon   
+	./qbed -daemon   
 And then, you can do something by your input commands, as:
 
 	#get block chain height
-	./qtc-cli getblockcount
+	./qbe-cli getblockcount
 	#get the blockHash of the first block  
-	./qtc-cli getblockhash 1
+	./qbe-cli getblockhash 1
 	#get the chain params
-	./qtc-cli getinfo
+	./qbe-cli getinfo
 
 
 
 ####(2) GUI 
 If you want run Qt GUI, you need use OSX, not ubuntu, also input command:
 	
-	cd ~/qtc/src/qt
-	./qtc-qt
+	cd ~/qbe/src/qt
+	./qbe-qt
 
 And then you can using the GUI program Efficiently.
 
