@@ -50,18 +50,8 @@ Building Qbe Core
 
 ### (1)Build on Ubuntu
 This is a quick start script for compiling Qbe on  Ubuntu.
-  
-####1.Install protobuf(The version of apt-get is too low)
 
-	wget https://github.com/google/protobuf/archive/v3.5.1.tar.gz
-	tar -xzvf v3.5.1.tar.gz
-	cd protobuf-3.5.1/ 
-	./autogen.sh 
-	./configure --prefix=/usr/local/protobuf 
-	make -j8 && make install 
-	ldconfig
-
-#####2.Installing Dependencies for Qbe
+#####1.Installing Dependencies for Qbe
 
     apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils git cmake libboost-all-dev
     apt-get install software-properties-common
@@ -70,13 +60,25 @@ This is a quick start script for compiling Qbe on  Ubuntu.
     apt-get install libdb4.8-dev libdb4.8++-dev
 
 ###### If you want to build the Qt GUI:
-	apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qrencode
+	apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools qrencode
+
+
+####2.Install protobuf(The version of apt-get is too low)
+
+	wget https://github.com/google/protobuf/archive/v3.5.1.tar.gz
+	tar -xzvf v3.5.1.tar.gz
+	cd protobuf-3.5.1/ 
+	./autogen.sh 
+	./configure
+	make -j4 && make install 
+	ldconfig
 
 ###### Compile Qbe
 	git clone --recursive https://github.com/QbaoChain/qbe.git
 	cd qbe
 	./autogen.sh
-	./configure 
+	./configure
+	make -j4
     
 
 ### (2)Build on CentOS
