@@ -51,7 +51,7 @@ Building Qbe Core
 ### (1)Build on Ubuntu
 This is a quick start script for compiling Qbe on  Ubuntu.
 
-#####1.Installing Dependencies for Qbe
+#####1) Installing Dependencies for Qbe
 
     apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils git cmake libboost-all-dev
     apt-get install software-properties-common
@@ -63,7 +63,7 @@ This is a quick start script for compiling Qbe on  Ubuntu.
 	apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools qrencode
 
 
-####2.Install protobuf(The version of apt-get is too low)
+#####2) Install protobuf v3.5.1(The version of apt-get is too high)
 
 	wget https://github.com/google/protobuf/archive/v3.5.1.tar.gz
 	tar -xzvf v3.5.1.tar.gz
@@ -73,109 +73,19 @@ This is a quick start script for compiling Qbe on  Ubuntu.
 	make -j4 && make install 
 	ldconfig
 
-###### Compile Qbe
+#####3) Compile Qbe
 	git clone --recursive https://github.com/QbaoChain/qbe.git
 	cd qbe
 	./autogen.sh
 	./configure
 	make -j4
     
-
-### (2)Build on CentOS
-
-Here is a brief description for compiling Qbe on CentOS
-
-##### Compiling boost manually
-    sudo yum install python-devel bzip2-devel
-    git clone https://github.com/boostorg/boost.git
-    cd boost
-    git checkout boost-1.66.0
-    git submodule update --init --recursive
-    ./bootstrap.sh --prefix=/usr --libdir=/usr/lib64
-    ./b2 headers
-    sudo ./b2 -j4 install
-    
-##### Installing Dependencies for Qbe
-    sudo yum install epel-release
-    sudo yum install libtool libdb4-cxx-devel openssl-devel libevent-devel
-    
-    # If you want to build the Qt GUI:
-    sudo yum install qt5-qttools-devel protobuf-devel qrencode-devel
-    
-    # Building Qbe
-    git clone --recursive https://github.com/QbaoChain/qbe.git
-    cd qbe
-    ./autogen.sh
-    ./configure
-    make -j4
-
-### (3)Build on OSX
-
-The commands in this guide should be executed in a Terminal application.
-The built-in one is located in `/Applications/Utilities/Terminal.app`.
-
-##### 1) Preparation
-
-Install the OS X command line tools:
-
-`xcode-select --install`
-
-When the popup appears, click `Install`.
-
-Then install [Homebrew](https://brew.sh).
-
-##### 2) Dependencies
-
-    brew install cmake automake berkeley-db4 libtool --c++11 --without-single --without-static miniupnpc openssl pkg-config protobuf qt5 libevent imagemagick --with-librsvg qrencode
-
-NOTE: Building with Qt4 is still supported, however, could result in a broken UI. Building with Qt5 is recommended.
-
-##### 3) Install boost
-######1. Clone Homebrew source code and cd into `homebrew-core`
-
-        git clone https://github.com/Homebrew/homebrew-core.git
-	
-######2. check boost commit log
-		
-		 git log ./Formula/boost.rb | less
-		 
-######3. checkout git HEAD to commitId: 6308e2c01c0821f899acd75e47321cd3aa882680 ( boost --version 1.66.0)
-		
-		git checkout 6308e2c01c0821f899acd75e47321cd3aa882680
-	
-######4. brew install boost
-		
-		brew install ./Formula/boost.rb
-
-NOTE: the support boost version must be 1.66 or less 1.60
-
-##### 4) Build Qbe Core
-
-######1. Clone the qbe source code and cd into `qbe`
-
-        git clone --recursive https://github.com/QbaoChain/qbe.git
-        cd qbe
-
-######2.  Build qbe-core:
-
-    Configure and build the headless qbe binaries as well as the GUI (if Qt is found).
-
-    You can disable the GUI build by passing `--without-gui` to configure.
-
-        ./autogen.sh
-        ./configure
-        make
-
-######3.  It is recommended to build and run the unit tests:
-
-        make check
-        
-#### 5) Initialization Parameter Configuration
+#####4) Initialization Parameter Configuration
 ######1. mkdir qbe folder and touch qbe.conf
 		
-		mkdir /Users/$UserName/Library/Application\ Support/Qbe
-		cd /Users/$UseName/Library/Application\ Support/Qbe
-		touch qbe.conf
+	mkdir ~/.qbe
+	cd ~/.qbe
+	touch qbe.conf
 	
 Note: replace $UserName to your computer name
 
@@ -202,9 +112,135 @@ Note: replace $UserName to your computer name
 
 ######3. mkdir chain_qbe and add configuration file
 		
-		mkdir chain_qbe
-		cd chain_qbe
-		touch qbe.conf
+	mkdir chain_qbe
+	cd chain_qbe
+	touch qbe.conf
+		
+######4. echo cofiguration parmeter to qbe.conf, The list of configuration parameters is as follows:
+
+	poa=1
+	token-name=QBE
+	genesis-input=qbao chain
+	msgstart=1234aabb
+	poa-miner-list=QWXrSap9kvsoPmq9YrXp87NQQn4utwVqTk,QgZLtFbLAdRLcmEHtf6jscv9ZVCuHHtDEF,QS7AgqJNkiVhiEyNw9CTLE1dTWwdkAown2
+	poa-interval=5
+	poa-timeout=3
+	default-port=8444
+	subsidy-init=666
+	subsidy-halving-interval=1500000
+	subsidy-halving-time=8
+
+### (2)Build on OSX
+
+The commands in this guide should be executed in a Terminal application.
+The built-in one is located in `/Applications/Utilities/Terminal.app`.
+
+##### 1) Preparation
+
+Install the OS X command line tools:
+
+    `xcode-select --install`
+
+When the popup appears, click `Install`.
+
+Then install [Homebrew](https://brew.sh).
+
+##### 2) Dependencies
+
+    brew install cmake automake berkeley-db4 libtool --c++11 --without-single --without-static miniupnpc openssl pkg-config qt5 libevent imagemagick --with-librsvg qrencode
+
+NOTE: Building with Qt4 is still supported, however, could result in a broken UI. Building with Qt5 is recommended.
+
+##### 3) Install protobuf 3.5.1
+
+Make sure wget is installed
+
+    brew install wget
+
+install protobuf 3.5.1
+
+    wget https://github.com/google/protobuf/archive/v3.5.1.tar.gz
+    tar -xzvf v3.5.1.tar.gz
+    cd protobuf-3.5.1/ 
+    ./autogen.sh 
+    ./configure
+    make -j4 && make install 
+
+##### 3) Install boost
+######1. Clone Homebrew source code and cd into `homebrew-core`
+
+    git clone https://github.com/Homebrew/homebrew-core.git
+	
+######2. check boost commit log
+		
+	git log ./Formula/boost.rb | less
+		 
+######3. checkout git HEAD to commitId: 6308e2c01c0821f899acd75e47321cd3aa882680 ( boost --version 1.66.0)
+		
+	git checkout 6308e2c01c0821f899acd75e47321cd3aa882680
+	
+######4. brew install boost
+		
+	brew install ./Formula/boost.rb
+
+NOTE: the support boost version must be 1.66 or less 1.60
+
+##### 4) Build Qbe Core
+
+######1. Clone the qbe source code and cd into `qbe`
+
+    git clone --recursive https://github.com/QbaoChain/qbe.git
+    cd qbe
+
+######2.  Build qbe-core:
+
+    Configure and build the headless qbe binaries as well as the GUI (if Qt is found).
+
+    You can disable the GUI build by passing `--without-gui` to configure.
+
+    ./autogen.sh
+    ./configure
+    make -j4
+
+######3.  It is recommended to build and run the unit tests:
+
+    make check
+        
+#### 5) Initialization Parameter Configuration
+######1. mkdir qbe folder and touch qbe.conf
+		
+	mkdir /Users/$UserName/Library/Application\ Support/qbe
+	cd /Users/$UseName/Library/Application\ Support/qbe
+	touch qbe.conf
+	
+Note: replace $UserName to your computer name
+
+######2. echo cofiguration parmeter to qbe.conf, The list of configuration parameters is as follows:
+	
+	addressindex=1
+	timestampindex=1
+	spentindex=1
+	rpcuser=admin
+	rpcpassword=admin
+	rpcallowip=0.0.0.0/0
+	addrindex=1
+	txindex=1
+	#zmqpubhashtx=tcp://0.0.0.0:4000
+	zmqpubhashblock=tcp://0.0.0.0:4000
+	#daemon=1
+	logevents=1
+	chain=qbe
+	server=1
+	addnode=47.100.27.65
+	#debug=zmq
+	maxmempool=100000
+
+
+######3. mkdir chain_qbe and add configuration file
+		
+	mkdir chain_qbe
+	cd chain_qbe
+	touch qbe.conf
 		
 ######4. echo cofiguration parmeter to qbe.conf, The list of configuration parameters is as follows:
 
