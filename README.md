@@ -60,6 +60,7 @@ This is a quick start script for compiling Qbe on  Ubuntu.
     apt-get install libdb4.8-dev libdb4.8++-dev
 
 ###### If you want to build the Qt GUI:
+
 	apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools qrencode
 
 
@@ -74,6 +75,7 @@ This is a quick start script for compiling Qbe on  Ubuntu.
 	ldconfig
 
 #####3) Compile Qbe
+
 	git clone --recursive https://github.com/QbaoChain/qbe.git
 	cd qbe
 	./autogen.sh
